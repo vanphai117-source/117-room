@@ -10,7 +10,8 @@ import {
 import { 
   Phone, MessageSquare, MapPin, Search, Plus, 
   Trash2, Edit, ChevronLeft, ChevronRight, 
-  LogIn, LogOut, Calendar, Check, X
+  LogIn, LogOut, Calendar, Check, X,
+  Eye, EyeOff // Đã thêm icon mắt đóng/mở
 } from 'lucide-react';
 
 // Cấu hình Firebase thực tế của dự án room-117
@@ -62,6 +63,7 @@ export default function App() {
   const [adminTab, setAdminTab] = useState('rooms');
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [loginError, setLoginError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Trạng thái ẩn/hiện mật khẩu
 
   // Bộ lọc
   const [selectedDistrict, setSelectedDistrict] = useState('Tất cả');
@@ -133,14 +135,13 @@ export default function App() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Tài khoản và mật khẩu chỉ bạn biết, không hiển thị gợi ý
     if (loginForm.username.trim().toLowerCase() === 'bon' && loginForm.password === 'bon117admin') {
       setIsAdmin(true);
       setShowLoginModal(false);
       setLoginError('');
       setLoginForm({ username: '', password: '' });
+      setShowPassword(false);
     } else {
-      // Chỉ báo lỗi chung chung, TUYỆT ĐỐI không để lộ tài khoản hay mật khẩu ra màn hình
       setLoginError('Tài khoản hoặc mật khẩu không chính xác!');
     }
   };
@@ -179,7 +180,6 @@ export default function App() {
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Nén file sang định dạng JPEG chất lượng tối ưu (chỉ còn khoảng 40KB - 60KB/ảnh)
           const compressedBase64 = canvas.toDataURL('image/jpeg', 0.65);
           resolve(compressedBase64);
         };
@@ -187,7 +187,6 @@ export default function App() {
     });
   };
 
-  // Xử lý chọn nhiều ảnh và nén đồng loạt
   const handleMultipleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
@@ -327,7 +326,8 @@ export default function App() {
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => setSelectedDistrict('Tất cả')}>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-black shadow-md text-lg">
+            {/* KHUNG CHỨA LOGO (Bạn có thể đổi sang thẻ img logo tại đây) */}
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-black shadow-md text-lg overflow-hidden">
               117
             </div>
             <div>
@@ -362,7 +362,10 @@ export default function App() {
               </div>
             ) : (
               <button 
-                onClick={() => setShowLoginModal(true)}
+                onClick={() => {
+                  setShowLoginModal(true);
+                  setShowPassword(false);
+                }}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition"
               >
                 <LogIn className="w-3.5 h-3.5" />
@@ -1148,7 +1151,7 @@ export default function App() {
         </div>
       )}
 
-      {/* MODAL ĐĂNG NHẬP ADMIN BON */}
+      {/* MODAL ĐĂNG NHẬP ADMIN BON (CÓ MẮT ẨN/HIỆN MẬT KHẨU & BẢO MẬT) */}
       {showLoginModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
@@ -1160,7 +1163,7 @@ export default function App() {
                 117
               </div>
               <h3 className="text-lg font-black text-slate-900">Đăng Nhập Quản Trị</h3>
-              <p className="text-xs text-slate-400">Dành riêng cho Admin Bon</p>
+              <p className="text-xs text-slate-400">Hệ thống quản trị nội bộ</p>
             </div>
 
             {loginError && (
@@ -1175,23 +1178,39 @@ export default function App() {
                 <input 
                   type="text" 
                   required
-                  placeholder="Tài khoản"
+                  placeholder="Nhập tài khoản"
                   value={loginForm.username}
                   onChange={(e) => setLoginForm({...loginForm, username: e.target.value})}
-                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
+                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition"
                 />
               </div>
+
               <div>
                 <label className="block font-bold text-slate-700 mb-1">Mật khẩu</label>
-                <input 
-                  type="password" 
-                  required
-                  placeholder="Mật khẩu"
-                  value={loginForm.password}
-                  onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
-                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
-                />
+                <div className="relative">
+                  <input 
+                    type={showPassword ? "text" : "password"} 
+                    required
+                    placeholder="Nhập mật khẩu"
+                    value={loginForm.password}
+                    onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
+                    className="w-full p-2.5 pr-10 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none"
+                    title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
               </div>
+
               <button 
                 type="submit"
                 className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm transition mt-2"
