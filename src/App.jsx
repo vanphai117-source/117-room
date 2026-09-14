@@ -1175,7 +1175,7 @@ export default function App() {
                 <input 
                   type="text" 
                   required
-                  placeholder="bon"
+                  placeholder="Tài khoản"
                   value={loginForm.username}
                   onChange={(e) => setLoginForm({...loginForm, username: e.target.value})}
                   className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
@@ -1186,7 +1186,7 @@ export default function App() {
                 <input 
                   type="password" 
                   required
-                  placeholder="bon117admin"
+                  placeholder="Mật khẩu"
                   value={loginForm.password}
                   onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
                   className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
