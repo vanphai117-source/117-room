@@ -133,13 +133,15 @@ export default function App() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (loginForm.username.toLowerCase() === 'bon' && loginForm.password === 'bon117admin') {
+    // Tài khoản và mật khẩu chỉ bạn biết, không hiển thị gợi ý
+    if (loginForm.username.trim().toLowerCase() === 'bon' && loginForm.password === 'bon117admin') {
       setIsAdmin(true);
       setShowLoginModal(false);
       setLoginError('');
       setLoginForm({ username: '', password: '' });
     } else {
-      setLoginError('Sai tài khoản hoặc mật khẩu (bon / bon117admin)');
+      // Chỉ báo lỗi chung chung, TUYỆT ĐỐI không để lộ tài khoản hay mật khẩu ra màn hình
+      setLoginError('Tài khoản hoặc mật khẩu không chính xác!');
     }
   };
 
