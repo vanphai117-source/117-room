@@ -134,7 +134,7 @@ export default function App() {
   const handleLogin = (e) => {
     e.preventDefault();
     // Tài khoản và mật khẩu chỉ bạn biết, không hiển thị gợi ý
-    if (loginForm.username.trim().toLowerCase() === 'Tài khoản' && loginForm.password === 'Mật khẩu') {
+    if (loginForm.username.trim().toLowerCase() === 'Bon' && loginForm.password === 'Anhzbon0@') {
       setIsAdmin(true);
       setShowLoginModal(false);
       setLoginError('');
