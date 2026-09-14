@@ -11,7 +11,7 @@ import {
   Phone, MessageSquare, MapPin, Search, Plus, 
   Trash2, Edit, ChevronLeft, ChevronRight, 
   LogIn, LogOut, Calendar, Check, X,
-  Eye, EyeOff // Đã thêm icon mắt đóng/mở
+  Eye, EyeOff
 } from 'lucide-react';
 
 // Cấu hình Firebase thực tế của dự án room-117
@@ -63,7 +63,7 @@ export default function App() {
   const [adminTab, setAdminTab] = useState('rooms');
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [loginError, setLoginError] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Trạng thái ẩn/hiện mật khẩu
+  const [showPassword, setShowPassword] = useState(false);
 
   // Bộ lọc
   const [selectedDistrict, setSelectedDistrict] = useState('Tất cả');
@@ -146,9 +146,7 @@ export default function App() {
     }
   };
 
-  // =========================================================================
-  // HÀM NÉN ẢNH TỰ ĐỘNG (GIẢI QUYẾT TRIỆT ĐỂ LỖI DUNG LƯỢNG 1MB CỦA FIRESTORE)
-  // =========================================================================
+  // Nén ảnh tự động
   const compressImage = (file) => {
     return new Promise((resolve) => {
       const reader = new FileReader();
@@ -284,7 +282,19 @@ export default function App() {
         setRooms(prev => prev.filter(r => r.id !== roomId));
       }
     } catch (err) {
-      alert("Lỗi xóa: " + err.message);
+      alert("Lỗi xóa phòng: " + err.message);
+    }
+  };
+
+  // =========================================================================
+  // HÀM XÓA KHÁCH HÀNG ĐẶT LỊCH HẸN (LEADS)
+  // =========================================================================
+  const handleDeleteLead = async (leadId, customerName) => {
+    if (!window.confirm(`Bạn có chắc chắn muốn xóa thông tin hẹn của khách "${customerName}" không?`)) return;
+    try {
+      await deleteDoc(doc(db, 'leads', leadId));
+    } catch (err) {
+      alert("Lỗi khi xóa khách hẹn: " + err.message);
     }
   };
 
@@ -326,7 +336,6 @@ export default function App() {
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => setSelectedDistrict('Tất cả')}>
-            {/* KHUNG CHỨA LOGO (Bạn có thể đổi sang thẻ img logo tại đây) */}
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-black shadow-md text-lg overflow-hidden">
               117
             </div>
@@ -519,7 +528,7 @@ export default function App() {
               </div>
             )}
 
-            {/* TAB LỊCH HẸN */}
+            {/* TAB LỊCH HẸN (ĐÃ CÓ NÚT XÓA KHÁCH HẸN) */}
             {adminTab === 'leads' && (
               <div className="mt-4 overflow-x-auto">
                 {leads.length === 0 ? (
@@ -533,7 +542,7 @@ export default function App() {
                         <th className="py-3 px-4">Phòng quan tâm</th>
                         <th className="py-3 px-4">Ngày giờ hẹn</th>
                         <th className="py-3 px-4">Ghi chú</th>
-                        <th className="py-3 px-4 text-right">Liên hệ nhanh</th>
+                        <th className="py-3 px-4 text-right">Thao tác</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800">
@@ -546,20 +555,34 @@ export default function App() {
                           <td className="py-3 px-4 text-xs text-slate-400">{lead.note || 'Không có'}</td>
                           <td className="py-3 px-4 text-right">
                             <div className="flex items-center justify-end gap-2">
+                              {/* Gọi điện */}
                               <a 
                                 href={`tel:${lead.customerPhone}`} 
-                                className="p-1.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-lg hover:bg-emerald-600 hover:text-white"
+                                className="p-1.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-lg hover:bg-emerald-600 hover:text-white transition"
+                                title="Gọi cho khách"
                               >
                                 <Phone className="w-4 h-4" />
                               </a>
+
+                              {/* Nhắn Zalo */}
                               <a 
                                 href={`https://zalo.me/${lead.customerPhone}`} 
                                 target="_blank" 
                                 rel="noreferrer"
-                                className="p-1.5 bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-lg hover:bg-blue-600 hover:text-white"
+                                className="p-1.5 bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-lg hover:bg-blue-600 hover:text-white transition"
+                                title="Nhắn Zalo"
                               >
                                 <MessageSquare className="w-4 h-4" />
                               </a>
+
+                              {/* NÚT XÓA KHÁCH HẸN */}
+                              <button
+                                onClick={() => handleDeleteLead(lead.id, lead.customerName)}
+                                className="p-1.5 bg-rose-600/20 text-rose-400 border border-rose-500/30 rounded-lg hover:bg-rose-600 hover:text-white transition"
+                                title="Xóa lịch hẹn này"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
                             </div>
                           </td>
                         </tr>
@@ -1151,7 +1174,7 @@ export default function App() {
         </div>
       )}
 
-      {/* MODAL ĐĂNG NHẬP ADMIN BON (CÓ MẮT ẨN/HIỆN MẬT KHẨU & BẢO MẬT) */}
+      {/* MODAL ĐĂNG NHẬP ADMIN BON */}
       {showLoginModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
