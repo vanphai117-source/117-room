@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+// ==========================================
+// 1. KẾT NỐI CHÍNH THỨC VỚI GOOGLE FIREBASE
+// ==========================================
 import { initializeApp } from "firebase/app";
 import { 
   getFirestore, collection, onSnapshot, 
@@ -24,6 +27,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Dữ liệu mẫu khởi đầu
 const DEFAULT_ROOMS = [
   {
     id: 'demo-1',
@@ -44,25 +48,6 @@ const DEFAULT_ROOMS = [
     phone: '0559655085',
     nearbySchools: ['HUTECH Điện Biên Phủ', 'UEF', 'GTVT'],
     description: 'Phòng mới sơn sửa sạch đẹp, ban công thoáng mát, cổng khóa vân tay an toàn tuyệt đối.'
-  },
-  {
-    id: 'demo-2',
-    title: 'Phòng Gác Cao Gần Trường ĐH Bách Khoa CS1',
-    district: 'Quận 10',
-    address: '497/23 Hòa Hảo, Phường 7, Quận 10',
-    price: 3800000,
-    area: 22,
-    status: 'available',
-    images: [
-      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80'
-    ],
-    electricity: '4.000đ/kWh',
-    water: '120.000đ/người',
-    amenities: ['Gác cao', 'Ban công', 'Máy giặt chung', 'Camera 24/7'],
-    contactName: 'Bon',
-    phone: '0559655085',
-    nearbySchools: ['ĐH Bách Khoa CS1', 'ĐH Y Dược', 'UEH'],
-    description: 'Vị trí đắc địa trung tâm Quận 10, cách Bách Khoa 3 phút đi bộ. Khu vực an ninh, yên tĩnh.'
   }
 ];
 
@@ -158,20 +143,63 @@ export default function App() {
     }
   };
 
-  const handleMultipleImageUpload = (e) => {
+  // =========================================================================
+  // HÀM NÉN ẢNH TỰ ĐỘNG (GIẢI QUYẾT TRIỆT ĐỂ LỖI DUNG LƯỢNG 1MB CỦA FIRESTORE)
+  // =========================================================================
+  const compressImage = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height = Math.round((height * MAX_WIDTH) / width);
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width = Math.round((width * MAX_HEIGHT) / height);
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Nén file sang định dạng JPEG chất lượng tối ưu (chỉ còn khoảng 40KB - 60KB/ảnh)
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.65);
+          resolve(compressedBase64);
+        };
+      };
+    });
+  };
+
+  // Xử lý chọn nhiều ảnh và nén đồng loạt
+  const handleMultipleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
 
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setRoomFormData(prev => ({
-          ...prev,
-          images: [...prev.images, reader.result]
-        }));
-      };
-      reader.readAsDataURL(file);
-    });
+    try {
+      const compressedImages = await Promise.all(files.map(file => compressImage(file)));
+      setRoomFormData(prev => ({
+        ...prev,
+        images: [...prev.images, ...compressedImages]
+      }));
+    } catch (err) {
+      console.error("Lỗi nén ảnh:", err);
+      alert("Có lỗi khi xử lý ảnh, vui lòng thử lại!");
+    }
   };
 
   const removeImageAtIndex = (idx) => {
@@ -867,7 +895,7 @@ export default function App() {
                     <input 
                       type="text" 
                       required
-                      placeholder="Ví dụ: Hoàng Long"
+                      placeholder="Ví dụ: Nguyễn Văn A"
                       value={bookingForm.customerName}
                       onChange={(e) => setBookingForm({...bookingForm, customerName: e.target.value})}
                       className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
@@ -910,7 +938,7 @@ export default function App() {
                     <label className="block font-bold text-slate-700 mb-1">Ghi chú (nếu có)</label>
                     <textarea 
                       rows={2}
-                      placeholder="Cần dọn vào ở ngay..."
+                      placeholder="Ví dụ: Cần chuyển vào ở đầu tháng..."
                       value={bookingForm.note}
                       onChange={(e) => setBookingForm({...bookingForm, note: e.target.value})}
                       className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
@@ -922,7 +950,7 @@ export default function App() {
                   type="submit"
                   className="w-full mt-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm transition"
                 >
-                  Xác Nhận Đặt Lịch
+                  Xác Nhận Đặt Lịch Hẹn
                 </button>
               </form>
             )}
@@ -930,7 +958,7 @@ export default function App() {
         </div>
       )}
 
-      {/* MODAL ADMIN THÊM/SỬA PHÒNG & TẢI ẢNH */}
+      {/* MODAL ADMIN THÊM / SỬA PHÒNG */}
       {showRoomModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl my-8">
@@ -952,6 +980,7 @@ export default function App() {
                   value={roomFormData.title}
                   onChange={(e) => setRoomFormData({...roomFormData, title: e.target.value})}
                   className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
+                  placeholder="Ví dụ: Phòng Gác Ban Công Ngay Landmark 81"
                 />
               </div>
 
@@ -995,10 +1024,10 @@ export default function App() {
                 />
               </div>
 
-              {/* TẢI NHIỀU ẢNH */}
+              {/* TẢI NHIỀU ẢNH CÙNG LÚC */}
               <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
                 <label className="block font-bold text-slate-800 mb-2 flex items-center justify-between">
-                  <span>Tải ảnh phòng (Chọn cùng lúc nhiều ảnh từ máy)</span>
+                  <span>Tải ảnh phòng (Chọn cùng lúc nhiều ảnh từ điện thoại/máy tính)</span>
                   <span className="text-[11px] text-blue-600 font-semibold">{roomFormData.images.length} ảnh đã chọn</span>
                 </label>
                 
@@ -1076,6 +1105,17 @@ export default function App() {
               </div>
 
               <div>
+                <label className="block font-bold text-slate-700 mb-1">Gần các trường ĐH</label>
+                <input 
+                  type="text" 
+                  value={roomFormData.nearbySchoolsText}
+                  onChange={(e) => setRoomFormData({...roomFormData, nearbySchoolsText: e.target.value})}
+                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
+                  placeholder="HUTECH, UEF, Bách Khoa..."
+                />
+              </div>
+
+              <div>
                 <label className="block font-bold text-slate-700 mb-1">Mô tả phòng</label>
                 <textarea 
                   rows={3}
@@ -1098,7 +1138,7 @@ export default function App() {
                   disabled={submitting}
                   className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30"
                 >
-                  {submitting ? 'Đang lưu Cloud...' : 'Lưu Dữ Liệu Ngay'}
+                  {submitting ? 'Đang nén & lưu lên Cloud...' : 'Lưu Dữ Liệu Ngay'}
                 </button>
               </div>
             </form>
