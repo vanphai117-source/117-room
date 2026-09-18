@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// ==========================================
-// 1. KẾT NỐI CHÍNH THỨC VỚI GOOGLE FIREBASE
-// ==========================================
 import { initializeApp } from "firebase/app";
 import { 
   getFirestore, collection, onSnapshot, 
@@ -14,7 +11,6 @@ import {
   Eye, EyeOff
 } from 'lucide-react';
 
-// Cấu hình Firebase thực tế của dự án room-117
 const firebaseConfig = {
   apiKey: "AIzaSyCEYpWfK2AvsqP5lpFqOcRPafjBZWNw9x0",
   authDomain: "room-117.firebaseapp.com",
@@ -28,12 +24,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Dữ liệu mẫu khởi đầu
+const DISTRICTS = [
+  'Quận 1',
+  'Quận 3',
+  'Quận 4',
+  'Quận 5',
+  'Quận 6',
+  'Quận 7',
+  'Quận 8',
+  'Quận 10',
+  'Quận 11',
+  'Quận 12',
+  'Quận Bình Tân',
+  'Quận Bình Thạnh',
+  'Quận Gò Vấp',
+  'Quận Phú Nhuận',
+  'Quận Tân Bình',
+  'Quận Tân Phú',
+  'Thành phố Thủ Đức'
+];
+
 const DEFAULT_ROOMS = [
   {
     id: 'demo-1',
     title: 'Phòng Studio Ban Công Thoáng Mát Ngay HUTECH & Landmark 81',
-    district: 'Bình Thạnh',
+    district: 'Quận Bình Thạnh',
     address: '117/12 Điện Biên Phủ, Phường 15, Bình Thạnh',
     price: 4500000,
     area: 28,
@@ -42,8 +57,10 @@ const DEFAULT_ROOMS = [
       'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80'
     ],
-    electricity: '3.800đ/kWh',
+    electricity: '4.000đ/kWh',
     water: '100.000đ/người',
+    serviceFee: '150.000đ/phòng',
+    parkingFee: '100.000đ/xe',
     amenities: ['Máy lạnh', 'Gác xép', 'Khóa vân tay', 'Giờ giấc tự do'],
     contactName: 'Bon',
     phone: '0559655085',
@@ -57,7 +74,7 @@ export default function App() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Quản trị Bon
+  // Admin authentication
   const [isAdmin, setIsAdmin] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [adminTab, setAdminTab] = useState('rooms');
@@ -65,16 +82,16 @@ export default function App() {
   const [loginError, setLoginError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  // Bộ lọc
+  // Filtering states
   const [selectedDistrict, setSelectedDistrict] = useState('Tất cả');
   const [searchKeyword, setSearchKeyword] = useState('');
   const [maxPrice, setMaxPrice] = useState(10000000);
 
-  // Chi tiết & Slider ảnh
+  // Detail modal & image viewer
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Đặt lịch hẹn
+  // Booking appointment modal
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [bookingRoom, setBookingRoom] = useState(null);
   const [bookingSuccess, setBookingSuccess] = useState(false);
@@ -86,21 +103,23 @@ export default function App() {
     note: ''
   });
 
-  // Modal Thêm/Sửa phòng
+  // Admin Add/Edit room modal
   const [showRoomModal, setShowRoomModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [roomFormData, setRoomFormData] = useState({
     id: '',
     title: '',
-    district: 'Bình Thạnh',
+    district: 'Quận Bình Thạnh',
     address: '',
     price: 3500000,
     area: 25,
     status: 'available',
     images: [],
-    electricity: '3.800đ/kWh',
+    electricity: '4.000đ/kWh',
     water: '100.000đ/người',
+    serviceFee: '150.000đ/phòng',
+    parkingFee: '100.000đ/xe',
     amenitiesText: 'Máy lạnh, Khóa vân tay, Giờ giấc tự do',
     contactName: 'Bon',
     phone: '0559655085',
@@ -108,14 +127,13 @@ export default function App() {
     description: ''
   });
 
-  // Đồng bộ thời gian thực từ Cloud Firestore
   useEffect(() => {
     const unsubscribeRooms = onSnapshot(collection(db, 'rooms'), (snapshot) => {
       const roomList = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
       setRooms(roomList.length === 0 ? DEFAULT_ROOMS : roomList);
       setLoading(false);
     }, (error) => {
-      console.warn("Dùng fallback rooms:", error);
+      console.warn("Fallback to default rooms:", error);
       setRooms(DEFAULT_ROOMS);
       setLoading(false);
     });
@@ -146,7 +164,6 @@ export default function App() {
     }
   };
 
-  // Nén ảnh tự động
   const compressImage = (file) => {
     return new Promise((resolve) => {
       const reader = new FileReader();
@@ -197,7 +214,6 @@ export default function App() {
       }));
     } catch (err) {
       console.error("Lỗi nén ảnh:", err);
-      alert("Có lỗi khi xử lý ảnh, vui lòng thử lại!");
     }
   };
 
@@ -234,8 +250,10 @@ export default function App() {
         area: Number(roomFormData.area),
         status: roomFormData.status || 'available',
         images: finalImages,
-        electricity: roomFormData.electricity,
-        water: roomFormData.water,
+        electricity: roomFormData.electricity || '4.000đ/kWh',
+        water: roomFormData.water || '100.000đ/người',
+        serviceFee: roomFormData.serviceFee || 'Miễn phí',
+        parkingFee: roomFormData.parkingFee || 'Miễn phí',
         amenities,
         nearbySchools,
         contactName: 'Bon',
@@ -254,7 +272,7 @@ export default function App() {
       }
       setShowRoomModal(false);
     } catch (err) {
-      alert("Lỗi lưu Firebase: " + err.message);
+      console.error("Lỗi lưu Firebase:", err);
     } finally {
       setSubmitting(false);
     }
@@ -274,7 +292,6 @@ export default function App() {
   };
 
   const handleDeleteRoom = async (roomId) => {
-    if (!window.confirm('Bạn có chắc chắn muốn xóa phòng này không?')) return;
     try {
       if (roomId && !roomId.startsWith('demo-')) {
         await deleteDoc(doc(db, 'rooms', roomId));
@@ -282,19 +299,15 @@ export default function App() {
         setRooms(prev => prev.filter(r => r.id !== roomId));
       }
     } catch (err) {
-      alert("Lỗi xóa phòng: " + err.message);
+      console.error("Lỗi xóa phòng:", err);
     }
   };
 
-  // =========================================================================
-  // HÀM XÓA KHÁCH HÀNG ĐẶT LỊCH HẸN (LEADS)
-  // =========================================================================
-  const handleDeleteLead = async (leadId, customerName) => {
-    if (!window.confirm(`Bạn có chắc chắn muốn xóa thông tin hẹn của khách "${customerName}" không?`)) return;
+  const handleDeleteLead = async (leadId) => {
     try {
       await deleteDoc(doc(db, 'leads', leadId));
     } catch (err) {
-      alert("Lỗi khi xóa khách hẹn: " + err.message);
+      console.error("Lỗi khi xóa khách hẹn:", err);
     }
   };
 
@@ -316,14 +329,14 @@ export default function App() {
       await addDoc(collection(db, 'leads'), payload);
       setBookingSuccess(true);
     } catch (err) {
-      alert("Lỗi gửi lịch hẹn: " + err.message);
+      console.error("Lỗi gửi lịch hẹn:", err);
     }
   };
 
   const filteredRooms = rooms.filter(room => {
     const matchDistrict = selectedDistrict === 'Tất cả' || room.district === selectedDistrict;
-    const matchKeyword = room.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-                         room.address.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+    const matchKeyword = room.title?.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+                         room.address?.toLowerCase().includes(searchKeyword.toLowerCase()) ||
                          room.nearbySchools?.some(s => s.toLowerCase().includes(searchKeyword.toLowerCase()));
     const matchPrice = room.price <= maxPrice;
     return matchDistrict && matchKeyword && matchPrice;
@@ -332,7 +345,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased">
       
-      {/* HEADER */}
+      {}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => setSelectedDistrict('Tất cả')}>
@@ -385,7 +398,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* ADMIN DASHBOARD */}
+      {}
       {isAdmin && (
         <section className="bg-slate-900 text-white py-6 border-b border-slate-800">
           <div className="max-w-7xl mx-auto px-4">
@@ -406,14 +419,16 @@ export default function App() {
                   setRoomFormData({
                     id: '',
                     title: '',
-                    district: 'Bình Thạnh',
+                    district: 'Quận Bình Thạnh',
                     address: '',
                     price: 3500000,
                     area: 25,
                     status: 'available',
                     images: [],
-                    electricity: '3.800đ/kWh',
+                    electricity: '4.000đ/kWh',
                     water: '100.000đ/người',
+                    serviceFee: '150.000đ/phòng',
+                    parkingFee: '100.000đ/xe',
                     amenitiesText: 'Máy lạnh, Khóa vân tay, Giờ giấc tự do',
                     contactName: 'Bon',
                     phone: '0559655085',
@@ -501,6 +516,10 @@ export default function App() {
                                 setIsEditing(true);
                                 setRoomFormData({
                                   ...room,
+                                  electricity: room.electricity || '4.000đ/kWh',
+                                  water: room.water || '100.000đ/người',
+                                  serviceFee: room.serviceFee || '150.000đ/phòng',
+                                  parkingFee: room.parkingFee || '100.000đ/xe',
                                   amenitiesText: room.amenities?.join(', ') || '',
                                   nearbySchoolsText: room.nearbySchools?.join(', ') || '',
                                   images: room.images || []
@@ -528,7 +547,7 @@ export default function App() {
               </div>
             )}
 
-            {/* TAB LỊCH HẸN (ĐÃ CÓ NÚT XÓA KHÁCH HẸN) */}
+            {/* TAB LỊCH HẸN (LEADS) */}
             {adminTab === 'leads' && (
               <div className="mt-4 overflow-x-auto">
                 {leads.length === 0 ? (
@@ -555,7 +574,6 @@ export default function App() {
                           <td className="py-3 px-4 text-xs text-slate-400">{lead.note || 'Không có'}</td>
                           <td className="py-3 px-4 text-right">
                             <div className="flex items-center justify-end gap-2">
-                              {/* Gọi điện */}
                               <a 
                                 href={`tel:${lead.customerPhone}`} 
                                 className="p-1.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-lg hover:bg-emerald-600 hover:text-white transition"
@@ -563,8 +581,6 @@ export default function App() {
                               >
                                 <Phone className="w-4 h-4" />
                               </a>
-
-                              {/* Nhắn Zalo */}
                               <a 
                                 href={`https://zalo.me/${lead.customerPhone}`} 
                                 target="_blank" 
@@ -574,10 +590,8 @@ export default function App() {
                               >
                                 <MessageSquare className="w-4 h-4" />
                               </a>
-
-                              {/* NÚT XÓA KHÁCH HẸN */}
                               <button
-                                onClick={() => handleDeleteLead(lead.id, lead.customerName)}
+                                onClick={() => handleDeleteLead(lead.id)}
                                 className="p-1.5 bg-rose-600/20 text-rose-400 border border-rose-500/30 rounded-lg hover:bg-rose-600 hover:text-white transition"
                                 title="Xóa lịch hẹn này"
                               >
@@ -596,7 +610,7 @@ export default function App() {
         </section>
       )}
 
-      {/* HERO BANNER */}
+      {}
       <section className="bg-gradient-to-b from-blue-900 to-indigo-950 text-white py-12 md:py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 text-xs font-bold mb-4">
@@ -611,13 +625,13 @@ export default function App() {
         </div>
       </section>
 
-      {/* BỘ LỌC */}
+      {}
       <section className="max-w-7xl mx-auto px-4 -mt-8 relative z-20">
         <div className="bg-white p-5 rounded-3xl shadow-xl border border-slate-100 flex flex-col md:flex-row gap-4 items-center">
           <div className="relative flex-1 w-full">
             <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input 
-              type="text"
+              type="text" 
               placeholder="Tìm theo đường, trường ĐH (Bách Khoa, HUTECH, RMIT...)"
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
@@ -625,20 +639,16 @@ export default function App() {
             />
           </div>
 
-          <div className="w-full md:w-56">
+          <div className="w-full md:w-60">
             <select
               value={selectedDistrict}
               onChange={(e) => setSelectedDistrict(e.target.value)}
               className="w-full py-3 px-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="Tất cả">Tất cả Quận / Huyện</option>
-              <option value="Bình Thạnh">Bình Thạnh</option>
-              <option value="Quận 10">Quận 10</option>
-              <option value="Quận 7">Quận 7</option>
-              <option value="Quận 1">Quận 1</option>
-              <option value="TP. Thủ Đức">TP. Thủ Đức</option>
-              <option value="Tân Bình">Tân Bình</option>
-              <option value="Gò Vấp">Gò Vấp</option>
+              <option value="Tất cả">Tất cả Quận / Thành phố</option>
+              {DISTRICTS.map((dist, idx) => (
+                <option key={idx} value={dist}>{dist}</option>
+              ))}
             </select>
           </div>
 
@@ -648,11 +658,11 @@ export default function App() {
               <span className="text-blue-600 font-bold">{(maxPrice / 1000000).toFixed(1)} tr/tháng</span>
             </div>
             <input 
-              type="range"
-              min="2000000"
-              max="10000000"
-              step="500000"
-              value={maxPrice}
+              type="range" 
+              min="2000000" 
+              max="10000000" 
+              step="500000" 
+              value={maxPrice} 
               onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
             />
@@ -660,7 +670,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* DANH SÁCH PHÒNG TRỌ */}
+      {}
       <main className="max-w-7xl mx-auto px-4 py-12">
         <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-6">
           Danh Sách Phòng Trọ Đang Cho Thuê ({filteredRooms.length})
@@ -772,7 +782,7 @@ export default function App() {
         )}
       </main>
 
-      {/* MODAL XEM CHI TIẾT & SLIDER ẢNH */}
+      {}
       {selectedRoom && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl my-8">
@@ -834,8 +844,10 @@ export default function App() {
               </p>
 
               <div className="grid grid-cols-2 gap-3 mt-4 p-3 bg-slate-50 rounded-2xl text-xs">
-                <div>⚡ Điện: <span className="font-bold">{selectedRoom.electricity}</span></div>
-                <div>💧 Nước: <span className="font-bold">{selectedRoom.water}</span></div>
+                <div>⚡ Điện: <span className="font-bold">{selectedRoom.electricity || '4.000đ/kWh'}</span></div>
+                <div>💧 Nước: <span className="font-bold">{selectedRoom.water || '100.000đ/người'}</span></div>
+                <div>🛠️ Phí dịch vụ: <span className="font-bold text-slate-800">{selectedRoom.serviceFee || 'Miễn phí'}</span></div>
+                <div>🛵 Phí gửi xe: <span className="font-bold text-slate-800">{selectedRoom.parkingFee || 'Miễn phí'}</span></div>
               </div>
 
               <div className="mt-4">
@@ -881,7 +893,7 @@ export default function App() {
         </div>
       )}
 
-      {/* MODAL KHÁCH ĐẶT LỊCH */}
+      {}
       {showBookingModal && bookingRoom && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
@@ -986,7 +998,7 @@ export default function App() {
         </div>
       )}
 
-      {/* MODAL ADMIN THÊM / SỬA PHÒNG */}
+      {}
       {showRoomModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl my-8">
@@ -1014,19 +1026,15 @@ export default function App() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Quận / Khu vực</label>
+                  <label className="block font-bold text-slate-700 mb-1">Quận / Thành phố</label>
                   <select 
                     value={roomFormData.district}
                     onChange={(e) => setRoomFormData({...roomFormData, district: e.target.value})}
                     className="w-full p-2.5 border border-slate-300 rounded-xl outline-none font-medium"
                   >
-                    <option value="Bình Thạnh">Bình Thạnh</option>
-                    <option value="Quận 10">Quận 10</option>
-                    <option value="Quận 7">Quận 7</option>
-                    <option value="Quận 1">Quận 1</option>
-                    <option value="TP. Thủ Đức">TP. Thủ Đức</option>
-                    <option value="Tân Bình">Tân Bình</option>
-                    <option value="Gò Vấp">Gò Vấp</option>
+                    {DISTRICTS.map((dist, idx) => (
+                      <option key={idx} value={dist}>{dist}</option>
+                    ))}
                   </select>
                 </div>
                 <div>
@@ -1041,18 +1049,30 @@ export default function App() {
                 </div>
               </div>
 
-              <div>
-                <label className="block font-bold text-slate-700 mb-1">Địa chỉ chi tiết</label>
-                <input 
-                  type="text" 
-                  required
-                  value={roomFormData.address}
-                  onChange={(e) => setRoomFormData({...roomFormData, address: e.target.value})}
-                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Địa chỉ chi tiết</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={roomFormData.address}
+                    onChange={(e) => setRoomFormData({...roomFormData, address: e.target.value})}
+                    className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Diện tích (m²)</label>
+                  <input 
+                    type="number" 
+                    required
+                    value={roomFormData.area}
+                    onChange={(e) => setRoomFormData({...roomFormData, area: e.target.value})}
+                    className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
+                  />
+                </div>
               </div>
 
-              {/* TẢI NHIỀU ẢNH CÙNG LÚC */}
+              {/* Uploading multiple images */}
               <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
                 <label className="block font-bold text-slate-800 mb-2 flex items-center justify-between">
                   <span>Tải ảnh phòng (Chọn cùng lúc nhiều ảnh từ điện thoại/máy tính)</span>
@@ -1108,6 +1128,7 @@ export default function App() {
                     type="text" 
                     value={roomFormData.electricity}
                     onChange={(e) => setRoomFormData({...roomFormData, electricity: e.target.value})}
+                    placeholder="Mặc định: 4.000đ/kWh"
                     className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
                   />
                 </div>
@@ -1117,6 +1138,30 @@ export default function App() {
                     type="text" 
                     value={roomFormData.water}
                     onChange={(e) => setRoomFormData({...roomFormData, water: e.target.value})}
+                    placeholder="Ví dụ: 100.000đ/người"
+                    className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Phí dịch vụ</label>
+                  <input 
+                    type="text" 
+                    value={roomFormData.serviceFee}
+                    onChange={(e) => setRoomFormData({...roomFormData, serviceFee: e.target.value})}
+                    placeholder="Ví dụ: 150.000đ/phòng hoặc Miễn phí"
+                    className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Phí gửi xe</label>
+                  <input 
+                    type="text" 
+                    value={roomFormData.parkingFee}
+                    onChange={(e) => setRoomFormData({...roomFormData, parkingFee: e.target.value})}
+                    placeholder="Ví dụ: 100.000đ/xe hoặc Miễn phí"
                     className="w-full p-2.5 border border-slate-300 rounded-xl outline-none"
                   />
                 </div>
@@ -1174,7 +1219,7 @@ export default function App() {
         </div>
       )}
 
-      {/* MODAL ĐĂNG NHẬP ADMIN BON */}
+      {}
       {showLoginModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
@@ -1245,7 +1290,7 @@ export default function App() {
         </div>
       )}
 
-      {/* FOOTER */}
+      {}
       <footer className="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-xs text-center">
         <p className="font-semibold text-slate-300">117 ROOM • Phòng Trọ TP. Hồ Chí Minh</p>
         <p className="mt-1">Quản lý: Bon — 0559.655.085</p>
