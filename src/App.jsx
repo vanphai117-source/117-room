@@ -9,7 +9,7 @@ import {
   Trash2, Edit, ChevronLeft, ChevronRight, 
   LogIn, LogOut, Calendar, Check, X,
   Eye, EyeOff, Zap, Droplets, ShieldCheck, Bike,
-  GraduationCap, Sparkles, Filter, RefreshCw
+  Sparkles, Filter, RefreshCw
 } from 'lucide-react';
 
 // Cấu hình Firebase thực tế của dự án room-117
@@ -47,127 +47,10 @@ const DISTRICTS = [
   'Thành phố Thủ Đức'
 ];
 
-// Danh sách các trường Đại học & Học viện tại TP.HCM
-const UNIVERSITY_GROUPS = [
-  {
-    group: '1. Khối ĐH Quốc gia TP.HCM (ĐHQG-HCM)',
-    schools: [
-      'Trường ĐH Bách khoa (HCMUT)',
-      'Trường ĐH Khoa học Tự nhiên (HCMUS)',
-      'Trường ĐH Khoa học Xã hội và Nhân văn (HCMUSSH)',
-      'Trường ĐH Công nghệ Thông tin (UIT)',
-      'Trường ĐH Kinh tế – Luật (UEL)',
-      'Trường ĐH Quốc tế (HCMIU)',
-      'Trường ĐH An Giang',
-      'Trường ĐH Khoa học Sức khỏe'
-    ]
-  },
-  {
-    group: '2. ĐH & Học viện Công lập (Kinh tế - Luật - Hành chính)',
-    schools: [
-      'ĐH Kinh tế TP.HCM (UEH)',
-      'ĐH Ngoại thương – Cơ sở 2 (FTU2)',
-      'ĐH Ngân hàng TP.HCM (HUB)',
-      'ĐH Tài chính – Marketing (UFM)',
-      'ĐH Luật TP.HCM (ULAW)',
-      'ĐH Mở TP.HCM (OU)',
-      'Học viện Cán bộ TP.HCM',
-      'Trường ĐH Lao động – Xã hội (Cơ sở 2)'
-    ]
-  },
-  {
-    group: '2. ĐH & Học viện Công lập (Kỹ thuật - Công nghệ - Giao thông)',
-    schools: [
-      'ĐH Sư phạm Kỹ thuật TP.HCM (HCMUTE)',
-      'ĐH Công nghiệp TP.HCM (IUH)',
-      'ĐH Công Thương TP.HCM (HUIT)',
-      'ĐH Giao thông Vận tải TP.HCM (UTH)',
-      'Phân hiệu ĐH Giao thông Vận tải tại TP.HCM (UTC2)',
-      'Học viện Công nghệ Bưu chính Viễn thông (PTIT)',
-      'Học viện Hàng không Việt Nam (VAA)'
-    ]
-  },
-  {
-    group: '2. ĐH Công lập (Y Dược - Sức khỏe)',
-    schools: [
-      'ĐH Y Dược TP.HCM (UMP)',
-      'ĐH Y khoa Phạm Ngọc Thạch (PNTU)'
-    ]
-  },
-  {
-    group: '2. ĐH Công lập (Sư phạm - Tổng hợp - Đa ngành)',
-    schools: [
-      'ĐH Sư phạm TP.HCM (HCMUE)',
-      'ĐH Sài Gòn (SGU)',
-      'ĐH Nông Lâm TP.HCM (NLU)',
-      'ĐH Tôn Đức Thắng (TDTU)',
-      'ĐH Tài nguyên và Môi trường TP.HCM (HCMUNRE)',
-      'ĐH Sư phạm Thể dục Thể thao TP.HCM',
-      'ĐH Thể dục Thể thao TP.HCM'
-    ]
-  },
-  {
-    group: '2. ĐH Công lập (Nghệ thuật - Kiến trúc - Văn hóa)',
-    schools: [
-      'ĐH Kiến trúc TP.HCM (UAH)',
-      'ĐH Mỹ thuật TP.HCM',
-      'Nhạc viện TP.HCM',
-      'ĐH Sân khấu – Điện ảnh TP.HCM',
-      'ĐH Văn hóa TP.HCM'
-    ]
-  },
-  {
-    group: '2. ĐH Khối Quân sự & Công an',
-    schools: [
-      'ĐH An ninh Nhân dân',
-      'ĐH Cảnh sát Nhân dân',
-      'ĐH Trần Đại Nghĩa',
-      'Trường Sĩ quan Lục quân 2'
-    ]
-  },
-  {
-    group: '3. Các trường Đại học Tư thục (Ngoài công lập)',
-    schools: [
-      'ĐH FPT TP.HCM',
-      'ĐH Công nghệ TP.HCM (HUTECH)',
-      'ĐH Văn Lang (VLU)',
-      'ĐH Hoa Sen (HSU)',
-      'ĐH Ngoại ngữ – Tin học TP.HCM (HUFLIT)',
-      'ĐH Kinh tế – Tài chính TP.HCM (UEF)',
-      'ĐH Nguyễn Tất Thành (NTTU)',
-      'ĐH Quốc tế Hồng Bàng (HIU)',
-      'ĐH Quốc tế Sài Gòn (SIU)',
-      'ĐH Công nghệ Sài Gòn (STU)',
-      'ĐH Văn Hiến (VHU)',
-      'ĐH Gia Định (GDU)',
-      'ĐH Hùng Vương TP.HCM (HVU)',
-      'ĐH Quản lý và Công nghệ TP.HCM (UMT)',
-      'ĐH Thái Bình Dương',
-      'ĐH Quốc tế Bắc Hà'
-    ]
-  },
-  {
-    group: '4. ĐH Quốc tế & Vốn đầu tư nước ngoài',
-    schools: [
-      'ĐH RMIT Việt Nam (Quận 7)',
-      'ĐH Fulbright Việt Nam (FUV)',
-      'ĐH Việt Đức (VGU)',
-      'ĐH Anh Quốc Việt Nam (BUV)',
-      'Viện Công nghệ Châu Á tại Việt Nam (AITCV)'
-    ]
-  }
-];
-
-// Nút gợi ý nhanh các trường phổ biến
-const POPULAR_UNIVERSITIES = [
-  'HUTECH', 'Bách khoa', 'UEH', 'Văn Lang', 'Sư phạm Kỹ thuật', 
-  'UIT', 'UEL', 'RMIT', 'Y Dược', 'Tôn Đức Thắng'
-];
-
 const DEFAULT_ROOMS = [
   {
     id: 'demo-1',
-    title: 'Phòng Studio Ban Công Thoáng Mát Ngay HUTECH & Landmark 81',
+    title: 'Phòng Studio Ban Công Thoáng Mát Ngay Landmark 81',
     district: 'Quận Bình Thạnh',
     address: '117/12 Điện Biên Phủ, Phường 15, Quận Bình Thạnh',
     price: 4500000,
@@ -184,12 +67,11 @@ const DEFAULT_ROOMS = [
     amenities: ['Máy lạnh', 'Gác xép', 'Khóa vân tay', 'Giờ giấc tự do'],
     contactName: 'Bon',
     phone: '0559655085',
-    nearbySchools: ['ĐH Công nghệ TP.HCM (HUTECH)', 'ĐH Kinh tế – Tài chính TP.HCM (UEF)', 'ĐH Giao thông Vận tải TP.HCM (UTH)'],
     description: 'Phòng mới sơn sửa sạch đẹp, ban công thoáng mát, cổng khóa vân tay an toàn tuyệt đối.'
   },
   {
     id: 'demo-2',
-    title: 'Phòng Cao Cấp Đầy Đủ Nội Thất Cạnh ĐH Sư Phạm & Sài Gòn Q5',
+    title: 'Phòng Cao Cấp Đầy Đủ Nội Thất Trung Tâm An Dương Vương Q5',
     district: 'Quận 5',
     address: '280 An Dương Vương, Phường 4, Quận 5',
     price: 5200000,
@@ -206,7 +88,6 @@ const DEFAULT_ROOMS = [
     amenities: ['Máy giặt riêng', 'Tủ lạnh', 'Máy lạnh Inverter', 'Camera an ninh'],
     contactName: 'Bon',
     phone: '0559655085',
-    nearbySchools: ['ĐH Sư phạm TP.HCM (HCMUE)', 'ĐH Sài Gòn (SGU)', 'ĐH Khoa học Tự nhiên (HCMUS)'],
     description: 'Vị trí đắc địa trung tâm Quận 5 giáp Quận 1, khu dân trí cao yên tĩnh, ra vào khóa vân tay riêng biệt.'
   }
 ];
@@ -229,7 +110,6 @@ export default function App() {
 
   // Bộ lọc
   const [selectedDistrict, setSelectedDistrict] = useState('Tất cả');
-  const [selectedUniversity, setSelectedUniversity] = useState('Tất cả');
   const [searchKeyword, setSearchKeyword] = useState('');
   const [maxPrice, setMaxPrice] = useState(10000000);
 
@@ -269,7 +149,6 @@ export default function App() {
     amenitiesText: 'Máy lạnh, Khóa vân tay, Giờ giấc tự do',
     contactName: 'Bon',
     phone: '0559655085',
-    nearbySchoolsText: '',
     description: ''
   });
 
@@ -394,7 +273,6 @@ export default function App() {
     setSubmitting(true);
     try {
       const amenities = roomFormData.amenitiesText.split(',').map(s => s.trim()).filter(Boolean);
-      const nearbySchools = roomFormData.nearbySchoolsText.split(',').map(s => s.trim()).filter(Boolean);
       const finalImages = roomFormData.images.length > 0 
         ? roomFormData.images 
         : ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80'];
@@ -412,7 +290,6 @@ export default function App() {
         serviceFee: roomFormData.serviceFee || '150.000đ/phòng',
         parkingFee: roomFormData.parkingFee || '100.000đ/xe',
         amenities,
-        nearbySchools,
         contactName: 'Bon',
         phone: '0559655085',
         description: roomFormData.description,
@@ -505,120 +382,142 @@ export default function App() {
     const kw = searchKeyword.toLowerCase();
     const matchKeyword = !searchKeyword.trim() || 
       room.title?.toLowerCase().includes(kw) ||
-      room.address?.toLowerCase().includes(kw) ||
-      room.nearbySchools?.some(s => s.toLowerCase().includes(kw));
-
-    // University match
-    const matchUniversity = selectedUniversity === 'Tất cả' || (() => {
-      const uLower = selectedUniversity.toLowerCase();
-      const bracketMatch = selectedUniversity.match(/\(([^)]+)\)/);
-      const acronym = bracketMatch ? bracketMatch[1].toLowerCase() : '';
-      const cleanSchoolName = selectedUniversity
-        .replace(/\([^)]*\)/g, '')
-        .replace(/^(Trường\s+)?(ĐH|Học viện)\s+/i, '')
-        .trim().toLowerCase();
-
-      return (
-        room.nearbySchools?.some(s => {
-          const sLower = s.toLowerCase();
-          return sLower.includes(uLower) || 
-                 (acronym && sLower.includes(acronym)) || 
-                 (cleanSchoolName && sLower.includes(cleanSchoolName));
-        }) ||
-        room.title?.toLowerCase().includes(uLower) ||
-        (acronym && room.title?.toLowerCase().includes(acronym)) ||
-        room.description?.toLowerCase().includes(uLower) ||
-        (acronym && room.description?.toLowerCase().includes(acronym)) ||
-        room.address?.toLowerCase().includes(uLower)
-      );
-    })();
+      room.address?.toLowerCase().includes(kw);
 
     const matchPrice = Number(room.price) <= maxPrice;
-    return matchDistrict && matchKeyword && matchUniversity && matchPrice;
+    return matchDistrict && matchKeyword && matchPrice;
   });
 
   return (
-    <div className="min-h-screen bg-slate-50/70 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white relative">
-      {/* CSS Animation Styles */}
+    <div className="min-h-screen bg-slate-50/80 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white relative">
+      {/* Optimized Hardware-Accelerated CSS Styles for Mobile */}
       <style>{`
+        * {
+          -webkit-tap-highlight-color: transparent;
+        }
+        button, a, input, select {
+          touch-action: manipulation;
+        }
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
         }
         @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(18px); }
-          to { opacity: 1; transform: translateY(0); }
+          from { 
+            opacity: 0; 
+            transform: translate3d(0, 14px, 0); 
+          }
+          to { 
+            opacity: 1; 
+            transform: translate3d(0, 0, 0); 
+          }
+        }
+        @keyframes slideUpMobile {
+          from { 
+            opacity: 0; 
+            transform: translate3d(0, 100%, 0); 
+          }
+          to { 
+            opacity: 1; 
+            transform: translate3d(0, 0, 0); 
+          }
         }
         @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes floatSlow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
+          from { 
+            opacity: 0; 
+            transform: scale3d(0.96, 0.96, 1); 
+          }
+          to { 
+            opacity: 1; 
+            transform: scale3d(1, 1, 1); 
+          }
         }
         @keyframes shimmerLoading {
           0% { background-position: -200% 0; }
           100% { background-position: 200% 0; }
         }
-        @keyframes softPulse {
-          0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.04); opacity: 0.92; }
+
+        .animate-fade-in { 
+          animation: fadeIn 0.2s cubic-bezier(0.2, 0, 0, 1) forwards; 
+          will-change: opacity;
         }
-        .animate-fade-in { animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-fade-in-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-scale-in { animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-float { animation: floatSlow 3.5s ease-in-out infinite; }
-        .animate-pulse-soft { animation: softPulse 2.2s ease-in-out infinite; }
+        .animate-fade-in-up { 
+          animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+          will-change: transform, opacity;
+          backface-visibility: hidden;
+        }
+        .animate-scale-in { 
+          animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+          will-change: transform, opacity;
+          backface-visibility: hidden;
+        }
+        .animate-sheet-mobile {
+          animation: slideUpMobile 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          will-change: transform;
+        }
         .shimmer-box {
           background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
           background-size: 200% 100%;
-          animation: shimmerLoading 1.5s infinite;
+          animation: shimmerLoading 1.4s infinite linear;
+          will-change: background-position;
         }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @media (max-width: 640px) {
+          .modal-mobile-sheet {
+            align-items: flex-end !important;
+            padding: 0 !important;
+          }
+          .modal-mobile-sheet > div {
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            max-height: 90vh;
+          }
+        }
       `}</style>
 
       {/* Floating Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 animate-fade-in-up">
+        <div className="fixed bottom-5 right-4 left-4 sm:left-auto sm:right-6 z-50 animate-fade-in-up pointer-events-none">
           <div className={`flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-xl backdrop-blur-md text-xs font-bold border transition-all ${
             toastMessage.type === 'error' 
-              ? 'bg-rose-900/90 text-white border-rose-700' 
-              : 'bg-slate-900/90 text-emerald-400 border-slate-700'
+              ? 'bg-rose-900/95 text-white border-rose-700' 
+              : 'bg-slate-900/95 text-emerald-400 border-slate-700'
           }`}>
-            <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+            <Sparkles className="w-4 h-4 text-amber-400 animate-pulse shrink-0" />
             <span>{toastMessage.text}</span>
           </div>
         </div>
       )}
 
       {/* HEADER */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all duration-300">
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div 
-            className="flex items-center gap-3 cursor-pointer group" 
-            onClick={() => { setSelectedDistrict('Tất cả'); setSelectedUniversity('Tất cả'); setSearchKeyword(''); }}
+            className="flex items-center gap-2.5 sm:gap-3 cursor-pointer select-none active:opacity-80 transition-opacity" 
+            onClick={() => { setSelectedDistrict('Tất cả'); setSearchKeyword(''); }}
           >
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center text-white font-black shadow-md shadow-blue-500/20 text-lg transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center text-white font-black shadow-md shadow-blue-500/20 text-base sm:text-lg">
               117
             </div>
             <div>
-              <div className="text-xl font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent flex items-center gap-1.5">
+              <div className="text-lg sm:text-xl font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent flex items-center gap-1.5 leading-tight">
                 <span>117 ROOM</span>
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
               </div>
-              <div className="text-[10px] text-slate-400 font-bold tracking-wider">TP. HỒ CHÍ MINH • REALTIME</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-400 font-bold tracking-wider">TP. HỒ CHÍ MINH • REALTIME</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <a 
               href="tel:0559655085" 
-              className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-blue-50/80 hover:bg-blue-100 text-blue-700 font-bold text-xs transition-all duration-200 hover:shadow-xs active:scale-95"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-full bg-blue-50 text-blue-700 font-bold text-xs active:scale-95 transition-transform"
             >
-              <Phone className="w-3.5 h-3.5 text-blue-600 animate-bounce" />
-              <span>0559.655.085 (Bon)</span>
+              <Phone className="w-3.5 h-3.5 text-blue-600" />
+              <span className="max-sm:hidden">0559.655.085</span>
+              <span className="sm:hidden">Gọi Bon</span>
             </a>
 
             {isAdmin ? (
@@ -628,7 +527,7 @@ export default function App() {
                 </span>
                 <button 
                   onClick={() => { setIsAdmin(false); triggerToast('Đã đăng xuất quản trị!'); }}
-                  className="p-2 text-slate-500 hover:text-red-600 rounded-xl hover:bg-red-50 transition-all duration-200 active:scale-90"
+                  className="p-2 text-slate-500 hover:text-red-600 rounded-xl hover:bg-red-50 transition-colors active:scale-90"
                   title="Đăng xuất"
                 >
                   <LogOut className="w-4 h-4" />
@@ -640,10 +539,10 @@ export default function App() {
                   setShowLoginModal(true);
                   setShowPassword(false);
                 }}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100/80 hover:border-slate-400 transition-all duration-200 active:scale-95"
+                className="flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 active:scale-95 transition-transform"
               >
                 <LogIn className="w-3.5 h-3.5 text-slate-500" />
-                <span>Admin Bon</span>
+                <span>Admin</span>
               </button>
             )}
           </div>
@@ -685,12 +584,11 @@ export default function App() {
                     amenitiesText: 'Máy lạnh, Khóa vân tay, Giờ giấc tự do',
                     contactName: 'Bon',
                     phone: '0559655085',
-                    nearbySchoolsText: '',
                     description: ''
                   });
                   setShowRoomModal(true);
                 }}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 transition-all duration-300 hover:shadow-blue-600/50 hover:scale-[1.02] active:scale-95 self-start"
+                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold text-xs sm:text-sm shadow-md active:scale-95 transition-transform self-start"
               >
                 <Plus className="w-4 h-4" />
                 <span>Đăng Thêm Phòng Mới</span>
@@ -700,25 +598,25 @@ export default function App() {
             <div className="flex gap-2 mt-4">
               <button
                 onClick={() => setAdminTab('rooms')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                   adminTab === 'rooms' 
-                    ? 'bg-white text-slate-900 shadow-md scale-100' 
-                    : 'bg-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-white text-slate-900 shadow-md' 
+                    : 'bg-slate-800/80 text-slate-400'
                 }`}
               >
                 Danh Sách Phòng ({rooms.length})
               </button>
               <button
                 onClick={() => setAdminTab('leads')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                   adminTab === 'leads' 
-                    ? 'bg-white text-slate-900 shadow-md scale-100' 
-                    : 'bg-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-white text-slate-900 shadow-md' 
+                    : 'bg-slate-800/80 text-slate-400'
                 }`}
               >
                 <span>Khách Đặt Hẹn Xem Phòng</span>
                 {leads.length > 0 && (
-                  <span className="w-5 h-5 rounded-full bg-rose-500 text-white text-[10px] flex items-center justify-center font-bold animate-pulse">
+                  <span className="w-5 h-5 rounded-full bg-rose-500 text-white text-[10px] flex items-center justify-center font-bold">
                     {leads.length}
                   </span>
                 )}
@@ -751,7 +649,7 @@ export default function App() {
                           />
                         </td>
                         <td className="py-3 px-4 max-w-xs truncate">
-                          <div className="font-bold text-white truncate hover:text-blue-300 transition-colors">{room.title}</div>
+                          <div className="font-bold text-white truncate">{room.title}</div>
                           <div className="text-xs text-slate-400 truncate">{room.address}</div>
                         </td>
                         <td className="py-3 px-4 font-semibold text-blue-300">{room.district}</td>
@@ -765,13 +663,13 @@ export default function App() {
                         <td className="py-3 px-4">
                           <button
                             onClick={() => handleToggleStatus(room)}
-                            className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-1.5 active:scale-95 ${
+                            className={`px-3 py-1 rounded-full text-xs font-bold transition-transform active:scale-95 flex items-center gap-1.5 ${
                               room.status === 'available' 
-                                ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800 hover:bg-emerald-900' 
-                                : 'bg-rose-950/80 text-rose-400 border border-rose-800 hover:bg-rose-900'
+                                ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800' 
+                                : 'bg-rose-950/80 text-rose-400 border border-rose-800'
                             }`}
                           >
-                            <span className={`w-2 h-2 rounded-full ${room.status === 'available' ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}`}></span>
+                            <span className={`w-2 h-2 rounded-full ${room.status === 'available' ? 'bg-emerald-400' : 'bg-rose-400'}`}></span>
                             {room.status === 'available' ? 'Còn phòng' : 'Đã thuê'}
                           </button>
                         </td>
@@ -786,19 +684,18 @@ export default function App() {
                                   serviceFee: room.serviceFee || '150.000đ/phòng',
                                   parkingFee: room.parkingFee || '100.000đ/xe',
                                   amenitiesText: room.amenities?.join(', ') || '',
-                                  nearbySchoolsText: room.nearbySchools?.join(', ') || '',
                                   images: room.images || []
                                 });
                                 setShowRoomModal(true);
                               }}
-                              className="p-2 bg-slate-800 hover:bg-blue-600 rounded-xl text-slate-300 hover:text-white transition-all active:scale-90"
+                              className="p-2 bg-slate-800 hover:bg-blue-600 rounded-xl text-slate-300 hover:text-white active:scale-90 transition-transform"
                               title="Sửa"
                             >
                               <Edit className="w-3.5 h-3.5" />
                             </button>
                             <button
                               onClick={() => handleDeleteRoom(room.id)}
-                              className="p-2 bg-slate-800 hover:bg-rose-600 rounded-xl text-slate-300 hover:text-white transition-all active:scale-90"
+                              className="p-2 bg-slate-800 hover:bg-rose-600 rounded-xl text-slate-300 hover:text-white active:scale-90 transition-transform"
                               title="Xóa"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -841,7 +738,7 @@ export default function App() {
                             <div className="flex items-center justify-end gap-2">
                               <a 
                                 href={`tel:${lead.customerPhone}`} 
-                                className="p-2 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-xl hover:bg-emerald-600 hover:text-white transition-all active:scale-90"
+                                className="p-2 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-xl active:scale-90 transition-transform"
                                 title="Gọi cho khách"
                               >
                                 <Phone className="w-3.5 h-3.5" />
@@ -850,14 +747,14 @@ export default function App() {
                                 href={`https://zalo.me/${lead.customerPhone}`} 
                                 target="_blank" 
                                 rel="noreferrer"
-                                className="p-2 bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-xl hover:bg-blue-600 hover:text-white transition-all active:scale-90"
+                                className="p-2 bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-xl active:scale-90 transition-transform"
                                 title="Nhắn Zalo"
                               >
                                 <MessageSquare className="w-3.5 h-3.5" />
                               </a>
                               <button
                                 onClick={() => handleDeleteLead(lead.id)}
-                                className="p-2 bg-rose-600/20 text-rose-400 border border-rose-500/30 rounded-xl hover:bg-rose-600 hover:text-white transition-all active:scale-90"
+                                className="p-2 bg-rose-600/20 text-rose-400 border border-rose-500/30 rounded-xl active:scale-90 transition-transform"
                                 title="Xóa lịch hẹn này"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -875,76 +772,52 @@ export default function App() {
         </section>
       )}
 
-      {/* HERO BANNER WITH GRADIENT ANIMATIONS */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white py-14 md:py-20 px-4 overflow-hidden">
-        {/* Ambient Glows */}
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none animate-float"></div>
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none animate-float" style={{ animationDelay: '1.8s' }}></div>
-
+      {/* HERO BANNER - LIGHTWEIGHT ON MOBILE GPU */}
+      <section className="relative bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white py-12 md:py-18 px-4 overflow-hidden">
         <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-400/30 text-xs font-bold mb-4 backdrop-blur-md shadow-xs animate-pulse-soft">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-400/30 text-xs font-bold mb-3 backdrop-blur-xs">
             <Sparkles className="w-3.5 h-3.5 text-blue-300" />
             <span>PHÒNG TRỌ SINH VIÊN & NGƯỜI ĐI LÀM SÀI GÒN</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
             117 ROOM • Tìm Trọ Nhanh & Chuẩn Nhất TP.HCM
           </h1>
-          <p className="mt-3 text-slate-300/90 text-sm sm:text-base max-w-xl mx-auto font-normal">
-            Quản lý trực tiếp bởi Bon (0559.655.085) — Xem phòng miễn phí, chi phí minh bạch, hỗ trợ sinh viên các trường Đại học.
+          <p className="mt-2.5 text-slate-300/90 text-xs sm:text-base max-w-xl mx-auto font-normal">
+            Quản lý trực tiếp bởi Bon (0559.655.085) — Xem phòng miễn phí, chi phí minh bạch, phòng thật 100%.
           </p>
         </div>
       </section>
 
-      {/* FILTER PANEL */}
-      <section className="max-w-7xl mx-auto px-4 -mt-8 relative z-20">
-        <div className="bg-white/95 backdrop-blur-md p-5 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200/70 flex flex-col gap-4 transition-all duration-300 hover:shadow-2xl">
+      {/* FILTER PANEL - OPTIMIZED TOUCH TARGETS */}
+      <section className="max-w-7xl mx-auto px-3 sm:px-4 -mt-6 sm:-mt-8 relative z-20">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl shadow-lg border border-slate-200/80 flex flex-col gap-3">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
             {/* Search Input */}
-            <div className="relative md:col-span-4 group">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-blue-600 transition-colors" />
+            <div className="relative md:col-span-5">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input 
                 type="text" 
-                placeholder="Tìm đường, tên phòng, địa điểm..."
+                placeholder="Tìm tên phòng, đường, địa điểm..."
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-slate-50/90 hover:bg-slate-100/70 focus:bg-white border border-slate-200 rounded-2xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all duration-200"
+                className="w-full pl-10 pr-9 py-2.5 sm:py-3 bg-slate-50 focus:bg-white border border-slate-200 rounded-xl sm:rounded-2xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-colors"
               />
               {searchKeyword && (
                 <button 
                   onClick={() => setSearchKeyword('')} 
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-full"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
 
-            {/* University Dropdown */}
-            <div className="md:col-span-3">
-              <select
-                value={selectedUniversity}
-                onChange={(e) => setSelectedUniversity(e.target.value)}
-                className="w-full py-3 px-3.5 bg-slate-50/90 hover:bg-slate-100/70 focus:bg-white border border-slate-200 rounded-2xl text-xs sm:text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all duration-200 truncate cursor-pointer"
-              >
-                <option value="Tất cả">🎓 Tất cả Trường Đại học</option>
-                {UNIVERSITY_GROUPS.map((group, gIdx) => (
-                  <optgroup key={gIdx} label={group.group} className="font-bold text-slate-900 bg-slate-100">
-                    {group.schools.map((school, sIdx) => (
-                      <option key={sIdx} value={school} className="font-normal text-slate-700 bg-white">
-                        {school}
-                      </option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
-            </div>
-
             {/* District Dropdown */}
-            <div className="md:col-span-2">
+            <div className="md:col-span-3">
               <select
                 value={selectedDistrict}
                 onChange={(e) => setSelectedDistrict(e.target.value)}
-                className="w-full py-3 px-3 bg-slate-50/90 hover:bg-slate-100/70 focus:bg-white border border-slate-200 rounded-2xl text-xs sm:text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all duration-200 truncate cursor-pointer"
+                className="w-full py-2.5 sm:py-3 px-3 bg-slate-50 focus:bg-white border border-slate-200 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-colors cursor-pointer"
               >
                 <option value="Tất cả">📍 Tất cả Quận/Thành phố</option>
                 {DISTRICTS.map((dist, idx) => (
@@ -954,10 +827,10 @@ export default function App() {
             </div>
 
             {/* Price Slider */}
-            <div className="md:col-span-3 bg-slate-50/90 p-3 rounded-2xl border border-slate-200">
-              <div className="flex justify-between text-xs font-semibold text-slate-500 mb-1.5">
-                <span>Giá tối đa:</span>
-                <span className="text-blue-600 font-black">{(maxPrice / 1000000).toFixed(1)} tr/tháng</span>
+            <div className="md:col-span-4 bg-slate-50 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-slate-200">
+              <div className="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                <span>Mức giá tối đa:</span>
+                <span className="text-blue-600 font-bold">{(maxPrice / 1000000).toFixed(1)} tr/tháng</span>
               </div>
               <input 
                 type="range" 
@@ -966,153 +839,113 @@ export default function App() {
                 step="500000" 
                 value={maxPrice} 
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600 transition-all"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
               />
             </div>
-          </div>
-
-          {/* Quick University Selection Badges with Smooth Scroll */}
-          <div className="pt-2 border-t border-slate-100 flex items-center gap-2 overflow-x-auto text-xs pb-1 hide-scrollbar">
-            <span className="font-bold text-slate-400 whitespace-nowrap text-[11px] uppercase tracking-wider flex items-center gap-1">
-              <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
-              <span>Gợi ý ĐH:</span>
-            </span>
-            <button
-              onClick={() => setSelectedUniversity('Tất cả')}
-              className={`px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all duration-200 active:scale-95 ${
-                selectedUniversity === 'Tất cả' 
-                  ? 'bg-blue-600 text-white font-bold shadow-xs shadow-blue-500/40 scale-100' 
-                  : 'bg-slate-100/90 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
-              }`}
-            >
-              Tất cả
-            </button>
-            {POPULAR_UNIVERSITIES.map((uni, idx) => {
-              const fullUni = UNIVERSITY_GROUPS.flatMap(g => g.schools).find(s => s.toLowerCase().includes(uni.toLowerCase())) || uni;
-              const isSelected = selectedUniversity === fullUni;
-              return (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedUniversity(isSelected ? 'Tất cả' : fullUni)}
-                  className={`px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all duration-200 border active:scale-95 ${
-                    isSelected 
-                      ? 'bg-blue-600 border-blue-600 text-white font-bold shadow-xs shadow-blue-500/40 scale-100' 
-                      : 'bg-white border-slate-200 text-slate-700 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50/50'
-                  }`}
-                >
-                  {uni}
-                </button>
-              );
-            })}
           </div>
         </div>
       </section>
 
-      {/* MAIN CONTENT AREA WITH SKELETON & ANIMATED CARDS */}
-      <main className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-6">
+      {/* MAIN CONTENT AREA */}
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 py-8 sm:py-12">
+        <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-              Danh Sách Phòng Trọ Cho Thuê ({filteredRooms.length})
+            <h2 className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">
+              Danh Sách Phòng Trọ ({filteredRooms.length})
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">Giá chuẩn, không tăng giá ảo, xem phòng trực tiếp với Bon.</p>
+            <p className="text-xs text-slate-500 mt-0.5">Giá chuẩn, xem phòng trực tiếp với Bon.</p>
           </div>
 
-          {(selectedDistrict !== 'Tất cả' || selectedUniversity !== 'Tất cả' || searchKeyword || maxPrice < 10000000) && (
+          {(selectedDistrict !== 'Tất cả' || searchKeyword || maxPrice < 10000000) && (
             <button 
               onClick={() => { 
                 setSelectedDistrict('Tất cả'); 
-                setSelectedUniversity('Tất cả'); 
                 setSearchKeyword('');
                 setMaxPrice(10000000);
                 triggerToast('Đã đặt lại bộ lọc');
               }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs text-blue-600 font-bold transition-all active:scale-95"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 text-xs text-blue-600 font-bold active:scale-95 transition-transform"
             >
               <RefreshCw className="w-3 h-3" />
-              <span>Đặt lại bộ lọc</span>
+              <span>Đặt lại</span>
             </button>
           )}
         </div>
 
         {/* LOADING SKELETON */}
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((sk) => (
-              <div key={sk} className="bg-white rounded-3xl border border-slate-200/70 overflow-hidden shadow-xs p-3 flex flex-col gap-3">
-                <div className="w-full aspect-[4/3] rounded-2xl shimmer-box"></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {[1, 2, 3].map((sk) => (
+              <div key={sk} className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/80 p-3 flex flex-col gap-3">
+                <div className="w-full aspect-[4/3] rounded-xl sm:rounded-2xl shimmer-box"></div>
                 <div className="p-2 space-y-2.5">
                   <div className="h-5 w-3/4 rounded-md shimmer-box"></div>
                   <div className="h-4 w-1/2 rounded-md shimmer-box"></div>
-                  <div className="h-4 w-full rounded-md shimmer-box"></div>
-                  <div className="pt-2 flex gap-2">
-                    <div className="h-8 flex-1 rounded-xl shimmer-box"></div>
-                    <div className="h-8 flex-1 rounded-xl shimmer-box"></div>
-                  </div>
                 </div>
               </div>
             ))}
           </div>
         ) : filteredRooms.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 shadow-xs animate-fade-in-up">
-            <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mx-auto mb-3">
-              <Filter className="w-8 h-8 opacity-70" />
+          <div className="text-center py-14 bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs animate-fade-in-up">
+            <div className="w-14 h-14 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mx-auto mb-2.5">
+              <Filter className="w-7 h-7 opacity-70" />
             </div>
             <p className="text-slate-700 font-bold text-base">Không tìm thấy phòng phù hợp</p>
-            <p className="text-slate-400 text-xs mt-1">Hãy thử nới lỏng mức giá hoặc chọn quận/trường khác.</p>
+            <p className="text-slate-400 text-xs mt-1">Hãy thử nới lỏng mức giá hoặc chọn quận khác.</p>
             <button
-              onClick={() => { setSelectedDistrict('Tất cả'); setSelectedUniversity('Tất cả'); setSearchKeyword(''); setMaxPrice(10000000); }}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold shadow-md shadow-blue-500/20 hover:bg-blue-700 transition"
+              onClick={() => { setSelectedDistrict('Tất cả'); setSearchKeyword(''); setMaxPrice(10000000); }}
+              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold active:scale-95 transition-transform"
             >
               Xem tất cả phòng
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredRooms.map((room, idx) => (
               <div 
                 key={room.id}
-                style={{ animationDelay: `${idx * 0.06}s` }}
-                className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-xs hover:shadow-2xl hover:border-blue-300/80 hover:-translate-y-1.5 transition-all duration-300 ease-out flex flex-col group animate-fade-in-up"
+                style={{ animationDelay: `${Math.min(idx * 0.05, 0.3)}s` }}
+                className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/80 overflow-hidden shadow-xs hover:shadow-xl active:scale-[0.99] transition-all duration-200 flex flex-col group animate-fade-in-up"
               >
-                {/* Image Container with Zoom Effect */}
+                {/* Image Container with Touch Friendly Layout */}
                 <div 
-                  className="relative aspect-[4/3] overflow-hidden bg-slate-100 cursor-pointer" 
+                  className="relative aspect-[4/3] overflow-hidden bg-slate-100 cursor-pointer select-none" 
                   onClick={() => { setSelectedRoom(room); setActiveImageIndex(0); }}
                 >
                   <img 
                     src={room.images?.[0] || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80'} 
                     alt={room.title}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out" 
+                    loading="lazy"
+                    className="w-full h-full object-cover sm:group-hover:scale-105 transition-transform duration-500" 
                   />
                   
-                  <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-slate-800 shadow-md">
+                  <span className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full text-[11px] font-bold text-slate-800 shadow-sm">
                     📍 {room.district}
                   </span>
 
-                  <span className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-white">
+                  <span className="absolute bottom-2.5 right-2.5 bg-black/65 backdrop-blur-xs px-2 py-0.5 rounded-full text-[10px] font-semibold text-white">
                     📸 {room.images?.length || 1} ảnh
                   </span>
 
                   {room.status === 'rented' ? (
-                    <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center transition-opacity">
-                      <span className="px-4 py-1.5 bg-rose-600 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider shadow-lg">
+                    <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center">
+                      <span className="px-3.5 py-1.5 bg-rose-600 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider shadow">
                         ĐÃ CHO THUÊ
                       </span>
                     </div>
                   ) : (
-                    <span className="absolute top-3 right-3 bg-emerald-600/95 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1 backdrop-blur-xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                    <span className="absolute top-2.5 right-2.5 bg-emerald-600/95 text-white px-2.5 py-1 rounded-full text-[11px] font-bold shadow-sm flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                       CÒN PHÒNG
                     </span>
                   )}
                 </div>
 
-                {/* Content */}
-                <div className="p-5 flex-1 flex flex-col justify-between">
+                {/* Card Content */}
+                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-baseline justify-between mb-2">
-                      <div className="text-xl font-black text-blue-600 tracking-tight">
+                    <div className="flex items-baseline justify-between mb-1.5">
+                      <div className="text-lg sm:text-xl font-black text-blue-600 tracking-tight">
                         {Number(room.price).toLocaleString('vi-VN')} <span className="text-xs font-medium text-slate-500">đ/tháng</span>
                       </div>
                       <div className="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">{room.area} m²</div>
@@ -1120,41 +953,30 @@ export default function App() {
 
                     <h3 
                       onClick={() => { setSelectedRoom(room); setActiveImageIndex(0); }}
-                      className="font-bold text-slate-900 text-base line-clamp-2 group-hover:text-blue-600 transition-colors duration-200 cursor-pointer mb-2 leading-snug"
+                      className="font-bold text-slate-900 text-sm sm:text-base line-clamp-2 cursor-pointer mb-2 leading-snug"
                     >
                       {room.title}
                     </h3>
 
-                    <p className="text-xs text-slate-500 flex items-center gap-1.5 mb-3">
+                    <p className="text-xs text-slate-500 flex items-center gap-1 mb-3">
                       <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                       <span className="truncate">{room.address}</span>
                     </p>
 
-                    {/* Nearby schools badges */}
-                    {room.nearbySchools && room.nearbySchools.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mb-2">
-                        {room.nearbySchools.slice(0, 2).map((sch, sIdx) => (
-                          <span key={sIdx} className="px-2 py-0.5 bg-indigo-50 border border-indigo-100 text-indigo-700 rounded-lg text-[10px] font-semibold truncate max-w-[170px]">
-                            🎓 {sch}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
                     {/* Amenities Badges */}
-                    <div className="flex flex-wrap gap-1 mb-4">
+                    <div className="flex flex-wrap gap-1 mb-3">
                       {room.amenities?.slice(0, 3).map((item, aIdx) => (
-                        <span key={aIdx} className="px-2.5 py-0.5 bg-slate-100/90 text-slate-600 rounded-md text-[11px] font-medium">
+                        <span key={aIdx} className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-[10px] sm:text-[11px] font-medium">
                           {item}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-100 flex items-center gap-2">
+                  <div className="pt-2.5 border-t border-slate-100 flex items-center gap-2">
                     <button
                       onClick={() => { setSelectedRoom(room); setActiveImageIndex(0); }}
-                      className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all active:scale-95"
+                      className="flex-1 py-2.5 rounded-xl bg-slate-100 active:bg-slate-200 text-slate-700 font-bold text-xs active:scale-95 transition-transform"
                     >
                       Xem chi tiết
                     </button>
@@ -1166,7 +988,7 @@ export default function App() {
                           setShowBookingModal(true);
                           setBookingSuccess(false);
                         }}
-                        className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs transition-all duration-200 shadow-md shadow-blue-600/20 active:scale-95"
+                        className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs shadow-sm active:scale-95 transition-transform"
                       >
                         Đặt lịch xem
                       </button>
@@ -1183,28 +1005,28 @@ export default function App() {
         )}
       </main>
 
-      {/* MODAL CHI TIẾT PHÒNG */}
+      {/* MODAL CHI TIẾT PHÒNG - MOBILE BOTTOM SHEET */}
       {selectedRoom && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl my-8 animate-scale-in">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto modal-mobile-sheet animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl my-auto animate-scale-in max-sm:animate-sheet-mobile">
             <div className="relative aspect-[16/10] bg-black">
               <img 
                 src={selectedRoom.images?.[activeImageIndex] || selectedRoom.images?.[0]} 
                 alt="" 
-                className="w-full h-full object-contain transition-all duration-300"
+                className="w-full h-full object-contain"
               />
 
               {selectedRoom.images?.length > 1 && (
                 <>
                   <button 
                     onClick={() => setActiveImageIndex(prev => prev > 0 ? prev - 1 : selectedRoom.images.length - 1)}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition active:scale-90"
+                    className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 text-white flex items-center justify-center active:scale-90 transition-transform"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button 
                     onClick={() => setActiveImageIndex(prev => prev < selectedRoom.images.length - 1 ? prev + 1 : 0)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition active:scale-90"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/60 text-white flex items-center justify-center active:scale-90 transition-transform"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
@@ -1213,24 +1035,24 @@ export default function App() {
 
               <button 
                 onClick={() => setSelectedRoom(null)}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black transition active:scale-90"
+                className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center active:scale-90 transition-transform"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
 
-              <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-mono">
+              <div className="absolute bottom-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[10px] sm:text-xs px-2.5 py-1 rounded-full font-mono">
                 {activeImageIndex + 1} / {selectedRoom.images?.length || 1}
               </div>
             </div>
 
             {selectedRoom.images?.length > 1 && (
-              <div className="p-3 bg-slate-950 flex gap-2 overflow-x-auto hide-scrollbar">
+              <div className="p-2.5 bg-slate-950 flex gap-2 overflow-x-auto hide-scrollbar">
                 {selectedRoom.images.map((img, idx) => (
                   <button 
                     key={idx}
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`w-14 h-14 shrink-0 rounded-xl overflow-hidden border-2 transition-all duration-200 ${
-                      idx === activeImageIndex ? 'border-blue-500 scale-105 shadow-md shadow-blue-500/50' : 'border-transparent opacity-50 hover:opacity-80'
+                    className={`w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-xl overflow-hidden border-2 transition-all ${
+                      idx === activeImageIndex ? 'border-blue-500 scale-105' : 'border-transparent opacity-50'
                     }`}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
@@ -1239,15 +1061,15 @@ export default function App() {
               </div>
             )}
 
-            <div className="p-6">
-              <h3 className="text-xl font-black text-slate-900 tracking-tight">{selectedRoom.title}</h3>
+            <div className="p-4 sm:p-6 overflow-y-auto max-h-[55vh] sm:max-h-none">
+              <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">{selectedRoom.title}</h3>
               <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-slate-400" />
-                {selectedRoom.address}
+                <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>{selectedRoom.address}</span>
               </p>
 
               {/* 4 Chi phí chi tiết */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4 p-3.5 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3.5 p-3 bg-slate-50 border border-slate-100 rounded-xl sm:rounded-2xl text-xs">
                 <div className="flex flex-col">
                   <span className="text-slate-400 flex items-center gap-1 text-[11px]"><Zap className="w-3 h-3 text-amber-500" /> Tiền điện</span>
                   <span className="font-bold text-slate-800">{selectedRoom.electricity || '4.000đ/kWh'}</span>
@@ -1266,43 +1088,29 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Gần các trường ĐH */}
-              {selectedRoom.nearbySchools && selectedRoom.nearbySchools.length > 0 && (
-                <div className="mt-4">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Gần các trường Đại học</h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {selectedRoom.nearbySchools.map((sch, idx) => (
-                      <span key={idx} className="px-2.5 py-1 bg-indigo-50 border border-indigo-100 text-indigo-700 rounded-xl text-xs font-medium">
-                        🎓 {sch}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-4">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Tiện nghi phòng</h4>
-                <div className="flex flex-wrap gap-2">
+              <div className="mt-3.5">
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Tiện nghi phòng</h4>
+                <div className="flex flex-wrap gap-1.5">
                   {selectedRoom.amenities?.map((amenity, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-blue-50 border border-blue-100 text-blue-700 rounded-xl text-xs font-medium">
+                    <span key={idx} className="px-2.5 py-1 bg-blue-50 border border-blue-100 text-blue-700 rounded-lg sm:rounded-xl text-xs font-medium">
                       ✓ {amenity}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="mt-4">
+              <div className="mt-3.5">
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Mô tả chi tiết</h4>
                 <p className="text-xs text-slate-600 leading-relaxed whitespace-pre-line">{selectedRoom.description}</p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-100 flex gap-3">
+              <div className="mt-5 pt-3.5 border-t border-slate-100 flex gap-2 sm:gap-3">
                 <a 
                   href="tel:0559655085"
-                  className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all active:scale-95"
+                  className="flex-1 py-3 bg-emerald-600 active:bg-emerald-700 text-white font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-transform"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>Gọi Bon 0559.655.085</span>
+                  <span>Gọi Bon</span>
                 </a>
                 <button
                   onClick={() => {
@@ -1312,10 +1120,10 @@ export default function App() {
                     setShowBookingModal(true);
                     setBookingSuccess(false);
                   }}
-                  className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 shadow-md shadow-blue-600/20 transition-all active:scale-95"
+                  className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-transform"
                 >
                   <Calendar className="w-4 h-4" />
-                  <span>Đặt Lịch Hẹn Xem</span>
+                  <span>Đặt Lịch Hẹn</span>
                 </button>
               </div>
             </div>
@@ -1325,41 +1133,41 @@ export default function App() {
 
       {/* MODAL ĐẶT LỊCH HẸN */}
       {showBookingModal && bookingRoom && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-scale-in">
-            <button onClick={() => setShowBookingModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 modal-mobile-sheet animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl relative my-auto animate-scale-in max-sm:animate-sheet-mobile">
+            <button onClick={() => setShowBookingModal(false)} className="absolute top-4 right-4 text-slate-400 active:scale-90 transition-transform">
               <X className="w-5 h-5" />
             </button>
 
             {bookingSuccess ? (
-              <div className="text-center py-6 animate-fade-in">
-                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4 animate-bounce">
-                  <Check className="w-8 h-8" />
+              <div className="text-center py-5 animate-fade-in">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-3">
+                  <Check className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">Đặt Lịch Hẹn Thành Công!</h3>
-                <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                <h3 className="text-lg font-bold text-slate-900">Đặt Lịch Hẹn Thành Công!</h3>
+                <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
                   Dữ liệu đã tự động chuyển đến bảng quản lý của Bon. Bon sẽ sớm liên hệ xác nhận cho bạn.
                 </p>
-                <div className="mt-6 flex flex-col gap-2">
+                <div className="mt-5 flex flex-col gap-2">
                   <a 
                     href={`https://zalo.me/0559655085?text=${encodeURIComponent(`Chào Bon, mình vừa đặt hẹn xem phòng: ${bookingRoom.title} lúc ${bookingForm.visitTime} ngày ${bookingForm.visitDate}`)}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm text-center shadow-md shadow-blue-600/20 transition active:scale-95"
+                    className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl text-xs sm:text-sm text-center active:scale-95 transition-transform"
                   >
                     Nhắn Zalo xác nhận ngay cho Bon
                   </a>
-                  <button onClick={() => setShowBookingModal(false)} className="w-full py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-xs hover:bg-slate-200 transition">
+                  <button onClick={() => setShowBookingModal(false)} className="w-full py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-xs active:scale-95 transition-transform">
                     Đóng
                   </button>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleBookingSubmit}>
-                <h3 className="text-lg font-black text-slate-900 mb-1">Đặt Lịch Xem Phòng Miễn Phí</h3>
-                <p className="text-xs text-blue-600 font-semibold mb-4 truncate">{bookingRoom.title}</p>
+                <h3 className="text-base sm:text-lg font-black text-slate-900 mb-0.5">Đặt Lịch Xem Phòng Miễn Phí</h3>
+                <p className="text-xs text-blue-600 font-semibold mb-3 truncate">{bookingRoom.title}</p>
 
-                <div className="space-y-3 text-xs">
+                <div className="space-y-2.5 text-xs">
                   <div>
                     <label className="block font-bold text-slate-700 mb-1">Họ tên của bạn</label>
                     <input 
@@ -1368,7 +1176,7 @@ export default function App() {
                       placeholder="Ví dụ: Nguyễn Văn A"
                       value={bookingForm.customerName}
                       onChange={(e) => setBookingForm({...bookingForm, customerName: e.target.value})}
-                      className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                      className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                     />
                   </div>
                   <div>
@@ -1379,7 +1187,7 @@ export default function App() {
                       placeholder="Ví dụ: 0901234567"
                       value={bookingForm.customerPhone}
                       onChange={(e) => setBookingForm({...bookingForm, customerPhone: e.target.value})}
-                      className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                      className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -1390,7 +1198,7 @@ export default function App() {
                         required
                         value={bookingForm.visitDate}
                         onChange={(e) => setBookingForm({...bookingForm, visitDate: e.target.value})}
-                        className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                        className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                       />
                     </div>
                     <div>
@@ -1400,7 +1208,7 @@ export default function App() {
                         required
                         value={bookingForm.visitTime}
                         onChange={(e) => setBookingForm({...bookingForm, visitTime: e.target.value})}
-                        className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                        className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                       />
                     </div>
                   </div>
@@ -1411,14 +1219,14 @@ export default function App() {
                       placeholder="Ví dụ: Cần chuyển vào ở đầu tháng..."
                       value={bookingForm.note}
                       onChange={(e) => setBookingForm({...bookingForm, note: e.target.value})}
-                      className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                      className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                     />
                   </div>
                 </div>
 
                 <button 
                   type="submit"
-                  className="w-full mt-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl text-sm transition shadow-md shadow-blue-600/20 active:scale-95"
+                  className="w-full mt-3.5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl text-xs sm:text-sm active:scale-95 transition-transform"
                 >
                   Xác Nhận Đặt Lịch Hẹn
                 </button>
@@ -1430,18 +1238,18 @@ export default function App() {
 
       {/* MODAL THÊM / SỬA PHÒNG */}
       {showRoomModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl my-8 animate-scale-in">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-              <h3 className="text-lg font-black text-slate-900">
-                {isEditing ? 'Chỉnh Sửa Thông Tin Phòng' : 'Đăng Tin Phòng Trọ Mới (Realtime)'}
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto modal-mobile-sheet animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl my-auto animate-scale-in max-sm:animate-sheet-mobile max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h3 className="text-base sm:text-lg font-black text-slate-900">
+                {isEditing ? 'Chỉnh Sửa Thông Tin Phòng' : 'Đăng Tin Phòng Trọ Mới'}
               </h3>
-              <button onClick={() => setShowRoomModal(false)} className="text-slate-400 hover:text-slate-600 transition">
+              <button onClick={() => setShowRoomModal(false)} className="text-slate-400 active:scale-90 transition-transform">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSaveRoom} className="mt-4 space-y-4 text-xs">
+            <form onSubmit={handleSaveRoom} className="mt-3.5 space-y-3.5 text-xs">
               <div>
                 <label className="block font-bold text-slate-700 mb-1">Tiêu đề phòng</label>
                 <input 
@@ -1449,12 +1257,12 @@ export default function App() {
                   required
                   value={roomFormData.title}
                   onChange={(e) => setRoomFormData({...roomFormData, title: e.target.value})}
-                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                   placeholder="Ví dụ: Phòng Gác Ban Công Ngay Landmark 81"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">Quận / Khu vực (TP.HCM)</label>
                   <select 
@@ -1474,7 +1282,7 @@ export default function App() {
                     required
                     value={roomFormData.price}
                     onChange={(e) => setRoomFormData({...roomFormData, price: e.target.value})}
-                    className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                    className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                   />
                 </div>
               </div>
@@ -1486,15 +1294,15 @@ export default function App() {
                   required
                   value={roomFormData.address}
                   onChange={(e) => setRoomFormData({...roomFormData, address: e.target.value})}
-                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                 />
               </div>
 
               {/* Tải nhiều ảnh */}
-              <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+              <div className="p-3 sm:p-4 bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl">
                 <label className="block font-bold text-slate-800 mb-2 flex items-center justify-between">
-                  <span>Tải ảnh phòng (Chọn cùng lúc nhiều ảnh)</span>
-                  <span className="text-[11px] text-blue-600 font-semibold">{roomFormData.images.length} ảnh đã chọn</span>
+                  <span>Tải ảnh phòng (Chọn nhiều ảnh)</span>
+                  <span className="text-[11px] text-blue-600 font-semibold">{roomFormData.images.length} ảnh</span>
                 </label>
                 
                 <input 
@@ -1502,25 +1310,25 @@ export default function App() {
                   multiple 
                   accept="image/*"
                   onChange={handleMultipleImageUpload}
-                  className="w-full p-2 bg-white border border-slate-200 rounded-xl text-xs cursor-pointer"
+                  className="w-full p-2 bg-white border border-slate-200 rounded-xl text-xs"
                 />
 
                 {roomFormData.images.length > 0 && (
-                  <div className="grid grid-cols-4 gap-2 mt-3">
+                  <div className="grid grid-cols-4 gap-2 mt-2.5">
                     {roomFormData.images.map((img, idx) => (
                       <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-slate-300 group">
                         <img src={img} alt="" className="w-full h-full object-cover" />
                         {idx === 0 && (
-                          <span className="absolute top-1 left-1 bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
-                            Ảnh bìa
+                          <span className="absolute top-1 left-1 bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                            Bìa
                           </span>
                         )}
-                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-1.5">
+                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 sm:transition-opacity flex items-center justify-center gap-1">
                           {idx !== 0 && (
                             <button
                               type="button"
                               onClick={() => setAsCover(idx)}
-                              className="p-1.5 bg-amber-500 text-white rounded-lg text-xs hover:bg-amber-600 transition"
+                              className="p-1.5 bg-amber-500 text-white rounded-lg text-xs active:scale-90"
                               title="Đặt làm ảnh bìa"
                             >
                               ⭐
@@ -1529,7 +1337,7 @@ export default function App() {
                           <button
                             type="button"
                             onClick={() => removeImageAtIndex(idx)}
-                            className="p-1.5 bg-rose-600 text-white rounded-lg text-xs hover:bg-rose-700 transition"
+                            className="p-1.5 bg-rose-600 text-white rounded-lg text-xs active:scale-90"
                             title="Xóa ảnh"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -1542,24 +1350,24 @@ export default function App() {
               </div>
 
               {/* 4 Chi phí */}
-              <div className="grid grid-cols-2 gap-3 p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
+              <div className="grid grid-cols-2 gap-2.5 p-3 bg-slate-50 rounded-xl sm:rounded-2xl border border-slate-200">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">⚡ Tiền điện (Mặc định 4k)</label>
+                  <label className="block font-bold text-slate-700 mb-1">⚡ Điện (Mặc định 4k)</label>
                   <input 
                     type="text" 
                     value={roomFormData.electricity}
                     onChange={(e) => setRoomFormData({...roomFormData, electricity: e.target.value})}
-                    className="w-full p-2.5 bg-white border border-slate-300 rounded-xl outline-none"
+                    className="w-full p-2 bg-white border border-slate-300 rounded-xl outline-none"
                     placeholder="4.000đ/kWh"
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">💧 Tiền nước</label>
+                  <label className="block font-bold text-slate-700 mb-1">💧 Nước</label>
                   <input 
                     type="text" 
                     value={roomFormData.water}
                     onChange={(e) => setRoomFormData({...roomFormData, water: e.target.value})}
-                    className="w-full p-2.5 bg-white border border-slate-300 rounded-xl outline-none"
+                    className="w-full p-2 bg-white border border-slate-300 rounded-xl outline-none"
                     placeholder="100.000đ/người"
                   />
                 </div>
@@ -1569,7 +1377,7 @@ export default function App() {
                     type="text" 
                     value={roomFormData.serviceFee}
                     onChange={(e) => setRoomFormData({...roomFormData, serviceFee: e.target.value})}
-                    className="w-full p-2.5 bg-white border border-slate-300 rounded-xl outline-none"
+                    className="w-full p-2 bg-white border border-slate-300 rounded-xl outline-none"
                     placeholder="150.000đ/phòng"
                   />
                 </div>
@@ -1579,7 +1387,7 @@ export default function App() {
                     type="text" 
                     value={roomFormData.parkingFee}
                     onChange={(e) => setRoomFormData({...roomFormData, parkingFee: e.target.value})}
-                    className="w-full p-2.5 bg-white border border-slate-300 rounded-xl outline-none"
+                    className="w-full p-2 bg-white border border-slate-300 rounded-xl outline-none"
                     placeholder="100.000đ/xe"
                   />
                 </div>
@@ -1596,42 +1404,6 @@ export default function App() {
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Gần các trường ĐH</label>
-                <input 
-                  type="text" 
-                  value={roomFormData.nearbySchoolsText}
-                  onChange={(e) => setRoomFormData({...roomFormData, nearbySchoolsText: e.target.value})}
-                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none mb-2"
-                  placeholder="HUTECH, UEF, Bách Khoa..."
-                />
-                <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto p-2 bg-slate-50 rounded-xl border border-slate-200 hide-scrollbar">
-                  {UNIVERSITY_GROUPS.flatMap(g => g.schools).map((school, sIdx) => {
-                    const shortName = school.match(/\(([^)]+)\)/)?.[1] || school.replace(/^(Trường\s+)?(ĐH|Học viện)\s+/i, '');
-                    return (
-                      <button
-                        key={sIdx}
-                        type="button"
-                        onClick={() => {
-                          const current = roomFormData.nearbySchoolsText 
-                            ? roomFormData.nearbySchoolsText.split(',').map(s => s.trim()).filter(Boolean) 
-                            : [];
-                          if (!current.includes(school)) {
-                            setRoomFormData({
-                              ...roomFormData,
-                              nearbySchoolsText: [...current, school].join(', ')
-                            });
-                          }
-                        }}
-                        className="px-2 py-1 rounded-lg bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-400 text-slate-600 hover:text-blue-600 text-[10px] font-medium transition active:scale-95"
-                      >
-                        + {shortName}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div>
                 <label className="block font-bold text-slate-700 mb-1">Mô tả phòng</label>
                 <textarea 
                   rows={3}
@@ -1641,20 +1413,20 @@ export default function App() {
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-2.5 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setShowRoomModal(false)}
-                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition"
+                  className="px-4 py-2.5 bg-slate-100 active:bg-slate-200 text-slate-600 font-bold rounded-xl active:scale-95 transition-transform"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition active:scale-95"
+                  className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl active:scale-95 transition-transform"
                 >
-                  {submitting ? 'Đang lưu lên Cloud...' : 'Lưu Dữ Liệu Ngay'}
+                  {submitting ? 'Đang lưu...' : 'Lưu Dữ Liệu Ngay'}
                 </button>
               </div>
             </form>
@@ -1664,16 +1436,16 @@ export default function App() {
 
       {/* MODAL ĐĂNG NHẬP ADMIN BON */}
       {showLoginModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative animate-scale-in">
-            <button onClick={() => setShowLoginModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 modal-mobile-sheet animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-sm w-full p-5 sm:p-6 shadow-2xl relative my-auto animate-scale-in max-sm:animate-sheet-mobile">
+            <button onClick={() => setShowLoginModal(false)} className="absolute top-4 right-4 text-slate-400 active:scale-90 transition-transform">
               <X className="w-5 h-5" />
             </button>
-            <div className="text-center mb-5">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center mx-auto mb-2 font-black text-xl shadow-md shadow-blue-500/30">
+            <div className="text-center mb-4">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center mx-auto mb-2 font-black text-lg shadow-md">
                 117
               </div>
-              <h3 className="text-lg font-black text-slate-900">Đăng Nhập Quản Trị</h3>
+              <h3 className="text-base sm:text-lg font-black text-slate-900">Đăng Nhập Quản Trị</h3>
               <p className="text-xs text-slate-400">Hệ thống quản trị nội bộ Bon</p>
             </div>
 
@@ -1692,7 +1464,7 @@ export default function App() {
                   placeholder="Nhập tài khoản"
                   value={loginForm.username}
                   onChange={(e) => setLoginForm({...loginForm, username: e.target.value})}
-                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                 />
               </div>
 
@@ -1705,12 +1477,12 @@ export default function App() {
                     placeholder="Nhập mật khẩu"
                     value={loginForm.password}
                     onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
-                    className="w-full p-2.5 pr-10 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                    className="w-full p-2.5 pr-10 border border-slate-300 rounded-xl outline-none focus:border-blue-500 transition-colors"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -1719,7 +1491,7 @@ export default function App() {
 
               <button 
                 type="submit"
-                className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl text-sm transition shadow-md shadow-blue-600/30 active:scale-95 mt-2"
+                className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl text-xs sm:text-sm active:scale-95 transition-transform mt-2"
               >
                 Đăng Nhập
               </button>
@@ -1729,23 +1501,23 @@ export default function App() {
       )}
 
       {/* FLOATING ACTION BUTTON (CALL / ZALO) */}
-      <div className="fixed bottom-6 left-6 z-40 flex items-center gap-2">
+      <div className="fixed bottom-5 left-4 sm:left-6 z-40">
         <a 
           href="tel:0559655085"
-          className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-bold text-xs shadow-xl shadow-emerald-600/40 hover:scale-105 active:scale-95 transition-all duration-300"
+          className="flex items-center gap-2 px-3.5 sm:px-4 py-2.5 bg-emerald-600 text-white rounded-full font-bold text-xs shadow-lg active:scale-95 transition-transform"
           title="Gọi Bon ngay"
         >
-          <Phone className="w-4 h-4 animate-bounce" />
-          <span className="hidden sm:inline">Gọi Bon 0559.655.085</span>
+          <Phone className="w-4 h-4" />
+          <span>Gọi Bon 0559.655.085</span>
         </a>
       </div>
 
       {/* FOOTER */}
-      <footer className="bg-slate-900 text-slate-400 py-10 border-t border-slate-800 text-xs text-center">
+      <footer className="bg-slate-900 text-slate-400 py-8 sm:py-10 border-t border-slate-800 text-xs text-center">
         <div className="max-w-7xl mx-auto px-4">
           <p className="font-semibold text-slate-200 text-sm">117 ROOM • Phòng Trọ TP. Hồ Chí Minh</p>
           <p className="mt-1 text-slate-400">Quản lý: Bon — 0559.655.085</p>
-          <p className="mt-4 text-[11px] text-slate-600">Đồng bộ dữ liệu thời gian thực qua Cloud Firestore • Tối ưu chuyển động mượt mà</p>
+          <p className="mt-3 text-[11px] text-slate-600">Đồng bộ Cloud Firestore realtime • Tối ưu 60fps mượt mà trên di động</p>
         </div>
       </footer>
     </div>
