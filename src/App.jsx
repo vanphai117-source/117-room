@@ -12,7 +12,6 @@ import {
   Sparkles, Filter, RefreshCw, ArrowUpRight
 } from 'lucide-react';
 
-// Cấu hình Firebase thực tế của dự án room-117
 const firebaseConfig = {
   apiKey: "AIzaSyCEYpWfK2AvsqP5lpFqOcRPafjBZWNw9x0",
   authDomain: "room-117.firebaseapp.com",
@@ -26,7 +25,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Danh sách chuẩn các quận và thành phố tại TP.HCM (16 Quận + 1 Thành phố Thủ Đức)
 const DISTRICTS = [
   'Quận 1',
   'Quận 3',
@@ -54,7 +52,6 @@ const DEFAULT_ROOMS = [
     district: 'Quận Bình Thạnh',
     address: '117/12 Điện Biên Phủ, Phường 15, Quận Bình Thạnh',
     price: 4500000,
-    area: 28,
     status: 'available',
     images: [
       'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80',
@@ -75,7 +72,6 @@ const DEFAULT_ROOMS = [
     district: 'Quận 5',
     address: '280 An Dương Vương, Phường 4, Quận 5',
     price: 5200000,
-    area: 32,
     status: 'available',
     images: [
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80',
@@ -129,7 +125,7 @@ export default function App() {
     note: ''
   });
 
-  // Modal Thêm/Sửa phòng
+  // Modal Thêm/Sửa phòng (Đã bỏ field diện tích area)
   const [showRoomModal, setShowRoomModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -139,7 +135,6 @@ export default function App() {
     district: 'Quận Bình Thạnh',
     address: '',
     price: 3500000,
-    area: 25,
     status: 'available',
     images: [],
     electricity: '4.000đ/kWh',
@@ -282,7 +277,6 @@ export default function App() {
         district: roomFormData.district,
         address: roomFormData.address,
         price: Number(roomFormData.price),
-        area: Number(roomFormData.area),
         status: roomFormData.status || 'available',
         images: finalImages,
         electricity: roomFormData.electricity || '4.000đ/kWh',
@@ -388,7 +382,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50/85 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white relative">
-      {/* Optimized Styles with Smooth Micro-interactions */}
+      {/* Micro-interaction & Animation Styles */}
       <style>{`
         * {
           -webkit-tap-highlight-color: transparent;
@@ -397,7 +391,6 @@ export default function App() {
           touch-action: manipulation;
         }
 
-        /* Micro-interaction Keyframes */
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
@@ -476,7 +469,6 @@ export default function App() {
           animation: breatheGlow 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
         }
 
-        /* Button Sheen & Micro-Interaction Classes */
         .btn-sheen {
           position: relative;
           overflow: hidden;
@@ -502,7 +494,6 @@ export default function App() {
           animation: lightSweep 0.85s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Interactive Physics */
         .btn-spring {
           transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
         }
@@ -513,7 +504,6 @@ export default function App() {
           transform: translate3d(0, 1px, 0) scale3d(0.965, 0.965, 1) !important;
         }
 
-        /* Room Card Interaction */
         .room-card-hover {
           transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
         }
@@ -619,7 +609,7 @@ export default function App() {
         </div>
       </header>
 
-      {}
+      {/* ADMIN CONTROL PANEL */}
       {isAdmin && (
         <section className="bg-slate-900 text-white py-6 border-b border-slate-800 animate-fade-in-up">
           <div className="max-w-7xl mx-auto px-4">
@@ -644,7 +634,6 @@ export default function App() {
                     district: 'Quận Bình Thạnh',
                     address: '',
                     price: 3500000,
-                    area: 25,
                     status: 'available',
                     images: [],
                     electricity: '4.000đ/kWh',
@@ -816,7 +805,7 @@ export default function App() {
                               <a 
                                 href={`https://zalo.me/${lead.customerPhone}`} 
                                 target="_blank" 
-                                rel="noreferrer"
+                                rel="noreferrer" 
                                 className="btn-spring p-2 bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-xl hover:bg-blue-600 hover:text-white hover:shadow-md hover:shadow-blue-500/25"
                                 title="Nhắn Zalo"
                               >
@@ -842,7 +831,7 @@ export default function App() {
         </section>
       )}
 
-      {}
+      {/* HERO BANNER */}
       <section className="relative bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white py-12 md:py-18 px-4 overflow-hidden">
         <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in-up">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-400/30 text-xs font-bold mb-3 backdrop-blur-xs shadow-inner">
@@ -858,7 +847,7 @@ export default function App() {
         </div>
       </section>
 
-      {}
+      {/* FILTER CONTROLS */}
       <section className="max-w-7xl mx-auto px-3 sm:px-4 -mt-6 sm:-mt-8 relative z-20">
         <div className="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-200/80 flex flex-col gap-3">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
@@ -916,7 +905,7 @@ export default function App() {
         </div>
       </section>
 
-      {}
+      {/* MAIN ROOM LISTING (Đã xóa bỏ badge 25m2) */}
       <main className="max-w-7xl mx-auto px-3 sm:px-4 py-8 sm:py-12">
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -1011,14 +1000,13 @@ export default function App() {
                   )}
                 </div>
 
-                {/* Card Content */}
+                {/* Card Content (Hiển thị giá tiền tinh gọn, đã bỏ ô 25m2) */}
                 <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-baseline justify-between mb-1.5">
-                      <div className="text-lg sm:text-xl font-black text-blue-600 tracking-tight">
-                        {Number(room.price).toLocaleString('vi-VN')} <span className="text-xs font-medium text-slate-500">đ/tháng</span>
+                    <div className="mb-1.5">
+                      <div className="text-xl sm:text-2xl font-black text-blue-600 tracking-tight">
+                        {Number(room.price).toLocaleString('vi-VN')} <span className="text-xs font-semibold text-slate-500">đ/tháng</span>
                       </div>
-                      <div className="text-xs font-bold text-slate-600 bg-slate-100/90 px-2 py-0.5 rounded-md border border-slate-200/60">{room.area} m²</div>
                     </div>
 
                     <h3 
@@ -1076,7 +1064,7 @@ export default function App() {
         )}
       </main>
 
-      {}
+      {/* MODAL CHI TIẾT PHÒNG */}
       {selectedRoom && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto modal-mobile-sheet animate-fade-in">
           <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl my-auto animate-scale-in max-sm:animate-sheet-mobile">
@@ -1120,7 +1108,7 @@ export default function App() {
               <div className="p-2.5 bg-slate-950 flex gap-2 overflow-x-auto hide-scrollbar">
                 {selectedRoom.images.map((img, idx) => (
                   <button 
-                    key={idx}
+                    key={idx} 
                     onClick={() => setActiveImageIndex(idx)}
                     className={`btn-spring w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-xl overflow-hidden border-2 transition-all ${
                       idx === activeImageIndex ? 'border-blue-500 scale-105 shadow-md shadow-blue-500/30' : 'border-transparent opacity-50 hover:opacity-80'
@@ -1133,6 +1121,12 @@ export default function App() {
             )}
 
             <div className="p-4 sm:p-6 overflow-y-auto max-h-[55vh] sm:max-h-none">
+              <div className="flex items-baseline justify-between mb-1">
+                <div className="text-xl sm:text-2xl font-black text-blue-600">
+                  {Number(selectedRoom.price).toLocaleString('vi-VN')} đ/tháng
+                </div>
+              </div>
+
               <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">{selectedRoom.title}</h3>
               <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
                 <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
@@ -1202,7 +1196,7 @@ export default function App() {
         </div>
       )}
 
-      {}
+      {/* MODAL ĐẶT LỊCH HẸN */}
       {showBookingModal && bookingRoom && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 modal-mobile-sheet animate-fade-in">
           <div className="bg-white rounded-2xl sm:rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl relative my-auto animate-scale-in max-sm:animate-sheet-mobile">
@@ -1296,7 +1290,7 @@ export default function App() {
                 </div>
 
                 <button 
-                  type="submit"
+                  type="submit" 
                   className="btn-sheen btn-spring w-full mt-3.5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl text-xs sm:text-sm shadow-lg shadow-blue-500/25"
                 >
                   Xác Nhận Đặt Lịch Hẹn
@@ -1307,7 +1301,7 @@ export default function App() {
         </div>
       )}
 
-      {}
+      {/* MODAL ADMIN ĐĂNG/SỬA PHÒNG (Đã xóa trường diện tích) */}
       {showRoomModal && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto modal-mobile-sheet animate-fade-in">
           <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl my-auto animate-scale-in max-sm:animate-sheet-mobile max-h-[90vh] overflow-y-auto">
@@ -1505,7 +1499,7 @@ export default function App() {
         </div>
       )}
 
-      {}
+      {/* MODAL ADMIN BON LOGIN */}
       {showLoginModal && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 modal-mobile-sheet animate-fade-in">
           <div className="bg-white rounded-2xl sm:rounded-3xl max-w-sm w-full p-5 sm:p-6 shadow-2xl relative my-auto animate-scale-in max-sm:animate-sheet-mobile">
@@ -1561,7 +1555,7 @@ export default function App() {
               </div>
 
               <button 
-                type="submit"
+                type="submit" 
                 className="btn-sheen btn-spring w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md shadow-blue-500/30 mt-2"
               >
                 Đăng Nhập
@@ -1571,7 +1565,7 @@ export default function App() {
         </div>
       )}
 
-      {}
+      {/* FLOATING ACTION CALL BUTTON */}
       <div className="fixed bottom-5 left-4 sm:left-6 z-40">
         <a 
           href="tel:0559655085"
@@ -1583,7 +1577,7 @@ export default function App() {
         </a>
       </div>
 
-      {}
+      {/* FOOTER */}
       <footer className="bg-slate-900 text-slate-400 py-8 sm:py-10 border-t border-slate-800 text-xs text-center">
         <div className="max-w-7xl mx-auto px-4">
           <p className="font-semibold text-slate-200 text-sm">117 ROOM • Phòng Trọ TP. Hồ Chí Minh</p>
